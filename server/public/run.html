@@ -402,7 +402,7 @@ Object.assign(I18N.de, {
   last: "zuletzt: ", goal: "Ziel erreicht", released: "released, Ziel nicht erreicht",
   noDeath: "noch keiner gestorben", live: "live", connecting: "verbinde…", offline: "Raum gerade offline",
   ended: "beendet", unreachable: "Tracker-Server nicht erreichbar", runNotFound: "Diesen Run gibt es nicht.",
-  logFile: "Log-Datei", myTracker: "Mein Tracker", overview: "Übersicht", settings: "Einstellungen",
+  logFile: "Log-Datei", overview: "Übersicht", settings: "Einstellungen",
   loadingMore: "mehr…", loadingOlder: "lade ältere Einträge…", logStart: "· Anfang des Logs ·", run: "Archipelago Run #{n}",
   completed: "Completed", partial: "Completed: {x}/{y}", allRuns: "alle Runs",
   whoOverview: "Übersicht (alle Spieler)", whoTitle: "Wer bist du? Zeigt deinen eigenen Tracker.",
@@ -423,7 +423,7 @@ Object.assign(I18N.de, {
   noItems: "noch nichts angekommen.", from: "von {p}",
   hintsMine: "Deine Items in anderen Welten", hintsMineSub: "{n} gehintet. Haken = schon gefunden.",
   hintsWanted: "In deiner Welt gesucht", hintsWantedSub: "{n} Items anderer Spieler liegen gehintet bei dir.",
-  noHints: "keine Hints.", fullTab: "Voller Tracker", erTracker: "Voller {name}-Tracker (nur du)",
+  noHints: "keine Hints.",
   srcLog: "Ohne Raum-Link nur aus dem Log, seit der Tracker mitzählt.",
 });
 Object.assign(I18N.en, {
@@ -445,7 +445,7 @@ Object.assign(I18N.en, {
   noItems: "nothing arrived yet.", from: "from {p}",
   hintsMine: "Your items in other worlds", hintsMineSub: "{n} hinted. Check mark = already found.",
   hintsWanted: "Wanted from your world", hintsWantedSub: "{n} items of other players are hinted in your world.",
-  noHints: "no hints.", fullTab: "Full tracker", erTracker: "Full {name} tracker (only you)",
+  noHints: "no hints.",
   srcLog: "Without the room link only from the log, since the tracker started counting.",
   totalDeaths: "Total deaths", totalChecks: "Total checks", lastDeath: "Last death", log: "Log",
   all: "everyone", everything: "everything", got: "Item received", gave: "Item sent", items: "All items",
@@ -454,7 +454,7 @@ Object.assign(I18N.en, {
   last: "last: ", goal: "Goal reached", released: "released, goal not reached",
   noDeath: "nobody died yet", live: "live", connecting: "connecting…", offline: "room offline right now",
   ended: "ended", unreachable: "tracker server not reachable", runNotFound: "This run does not exist.",
-  logFile: "Log file", myTracker: "My tracker", overview: "Overview", settings: "Settings",
+  logFile: "Log file", overview: "Overview", settings: "Settings",
   loadingMore: "more…", loadingOlder: "loading older entries…", logStart: "· start of the log ·", run: "Archipelago Run #{n}",
   completed: "Completed", partial: "Completed: {x}/{y}", allRuns: "all runs",
 });
@@ -951,7 +951,6 @@ function renderMine() {
 }
 $("mttabs").querySelectorAll("button.mtab").forEach(b => b.onclick = () => { mtTab = b.dataset.mt; renderMine(); });
 
-/** My full tracker (regions with placements, my items) inside my player view. */
 ["mtq", "mtlocked", "mtdone"].forEach(id => $(id).addEventListener("input", () => renderMtPop()));
 
 function renderMtPop() {
