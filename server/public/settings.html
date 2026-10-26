@@ -5,6 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
 <title>Einstellungen · Archipelago Tracker</title>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="theme-color" content="#11222d">
 <link rel="stylesheet" href="/common.css?v=20">
 <script src="/common.js?v=20"></script>
 <style>
@@ -112,6 +116,9 @@
     <h2>Standard-Design</h2>
     <div class="hint" style="margin:-8px 0 12px">Gilt für alle, die oben im Kopf kein eigenes Design gewählt haben.</div>
     <div class="designs" id="designs"></div>
+    <h2>Logo</h2>
+    <div class="hint" style="margin:-8px 0 12px">Favicon im Browser-Tab und Zeichen oben links. Im Kopf nimmt es die Farbe des Designs an.</div>
+    <div class="designs icons" id="icons"></div>
     <h2>Runs</h2>
     <div id="runs"><div class="empty">lade…</div></div>
   </section>
@@ -370,6 +377,39 @@ function renderDesigns() {
   }
 }
 renderDesigns();
+
+// Site logo: favicon + header mark.
+const ICON_CHOICES = [
+  { id: "kompass", name: "Kompass", sub: "Inseln, Route und abgehaktes Ziel im Kompassring" },
+  { id: "pin", name: "Pin", sub: "Kartennadel mit Palmeninsel" },
+];
+let siteIcon = ICON_CHOICES.some(i => i.id === document.documentElement.dataset.icon) ? document.documentElement.dataset.icon : "kompass";
+function renderIcons() {
+  const host = $("icons");
+  host.innerHTML = "";
+  for (const ic of ICON_CHOICES) {
+    const b = document.createElement("button");
+    b.type = "button";
+    b.className = "dsg" + (ic.id === siteIcon ? " on" : "");
+    b.innerHTML = `<div class="ipv"><img src="/icon-${ic.id}.svg" alt=""><span style="--m:url(/icon-${ic.id}-mark.svg)"></span></div><div class="nm"></div><div class="sb"></div>`;
+    b.querySelector(".nm").textContent = ic.name + (ic.id === siteIcon ? " · aktiv" : "");
+    b.querySelector(".sb").textContent = ic.sub;
+    b.onclick = async () => {
+      try {
+        await api("/api/admin/site", { icon: ic.id });
+        siteIcon = ic.id;
+        document.documentElement.dataset.icon = ic.id;
+        renderIcons();
+        // Swap the favicon and header mark right away, without a reload.
+        const v = Date.now();
+        document.querySelectorAll('link[rel~="icon"], link[rel="apple-touch-icon"]').forEach(l => { l.href = l.href.split("?")[0] + "?v=" + v; });
+        document.querySelectorAll(".brand .logo").forEach(l => l.style.setProperty("--logo", `url(/logo-mark.svg?v=${v})`));
+      } catch (e) { alert(e.message); }
+    };
+    host.appendChild(b);
+  }
+}
+renderIcons();
 loadRuns();
 setInterval(() => { if (!$("edit").open && !document.querySelector(".run input:focus, .run select:focus")) loadRuns(); }, 15000);
 </script>

@@ -98,9 +98,15 @@ const DESIGNS = ["erdtree", "liesofp", "bg3", "ds3", "silksong", "classic", "arc
 const DEFAULT_DESIGN = DESIGNS.includes(process.env.DEFAULT_DESIGN) ? process.env.DEFAULT_DESIGN : "archipelago";
 const siteDesign = () => { const r = db.prepare("SELECT value FROM site WHERE key='design'").get(); return r && DESIGNS.includes(r.value) ? r.value : DEFAULT_DESIGN; };
 const escHtml = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+// Site logo (favicon + header mark), also chosen in /settings.
+const ICONS = ["kompass", "pin"];
+const siteIcon = () => { const r = db.prepare("SELECT value FROM site WHERE key='icon'").get(); return r && ICONS.includes(r.value) ? r.value : "kompass"; };
+// Fixed URLs browsers and the header ask for -> files of the chosen logo.
+const ICON_FILES = { "/favicon.svg": ".svg", "/favicon.ico": ".ico", "/favicon-32.png": "-32.png",
+                     "/apple-touch-icon.png": "-180.png", "/logo-512.png": "-512.png", "/logo-mark.svg": "-mark.svg" };
 /** Every page gets the design right in <html> (nothing flickers) and the site name/owner. */
 const withDesign = html => html
-  .replace(/<html lang="de">/, `<html lang="de" data-design="${siteDesign()}">`)
+  .replace(/<html lang="de">/, `<html lang="de" data-design="${siteDesign()}" data-icon="${siteIcon()}">`)
   .replace("<head>", `<head>\n<script>window.SITE = ${JSON.stringify({ name: SITE_NAME, owner: SITE_OWNER }).replace(/</g, "\\u003c")};</script>`)
   .replaceAll("{{SITE_NAME}}", escHtml(SITE_NAME))
   .replaceAll("{{SITE_OWNER}}", escHtml(SITE_OWNER || SITE_NAME));
@@ -963,7 +969,7 @@ const MIME = { ".html": "text/html; charset=utf-8", ".js": "text/javascript; cha
                ".css": "text/css; charset=utf-8", ".json": "application/json", ".svg": "image/svg+xml",
                ".png": "image/png", ".ico": "image/x-icon", ".woff2": "font/woff2" };
 
-function sendFile(res, name, code = 200) {
+function sendFile(res, name, code = 200, cache = null) {
   const full = path.normalize(path.join(PUBLIC, name));
   if (!full.startsWith(PUBLIC + path.sep)) { res.writeHead(403); return res.end(); }
   fs.readFile(full, (err, buf) => {
@@ -972,7 +978,7 @@ function sendFile(res, name, code = 200) {
     res.writeHead(code, { "content-type": MIME[path.extname(full)] || "application/octet-stream",
                           // Pages and their shared files change while the site runs: always revalidate.
                           // Fonts never change under the same name: cache them for a year.
-                          "cache-control": html || /\.(css|js)$/.test(name) ? "no-cache"
+                          "cache-control": cache || html || /\.(css|js)$/.test(name) ? "no-cache"
                             : name.endsWith(".woff2") ? "public, max-age=31536000, immutable" : "public, max-age=3600" });
     res.end(html ? withDesign(buf.toString("utf8")) : buf);
   });
@@ -980,7 +986,7 @@ function sendFile(res, name, code = 200) {
 
 function notFound(res) {
   res.writeHead(404, { "content-type": "text/html; charset=utf-8", "cache-control": "no-cache" });
-  res.end(`<!doctype html><html lang="de" data-design="${siteDesign()}"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  res.end(`<!doctype html><html lang="de" data-design="${siteDesign()}"><meta charset="utf-8"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Nicht gefunden · Archipelago Tracker</title><link rel="stylesheet" href="/common.css"><link rel="stylesheet" href="/theme.css">
 <script src="/common.js"></script>
 <body><header class="top"><h1><a class="brand" href="/"><span class="logo"></span><span class="bt">${escHtml(SITE_NAME)}</span></a></h1></header>
@@ -1030,6 +1036,11 @@ async function handleAdmin(req, res, p) {
 
   if (p === "/api/admin/site" && req.method === "POST") {
     const body = await readBody(req);
+    if (body.icon !== undefined) {
+      if (!ICONS.includes(body.icon)) return json(res, 400, { error: "unbekanntes Logo" });
+      q("INSERT INTO site (key, value) VALUES ('icon', ?) ON CONFLICT (key) DO UPDATE SET value=excluded.value").run(body.icon);
+      return json(res, 200, { ok: true, icon: body.icon });
+    }
     if (!DESIGNS.includes(body.design)) return json(res, 400, { error: "unbekanntes Design" });
     q("INSERT INTO site (key, value) VALUES ('design', ?) ON CONFLICT (key) DO UPDATE SET value=excluded.value").run(body.design);
     return json(res, 200, { ok: true, design: body.design });
@@ -1214,6 +1225,7 @@ const server = http.createServer(async (req, res) => {
     // ---- pages ----
     if (p === "/") return sendFile(res, "home.html");
     if (p === "/datenschutz" || p === "/privacy") return sendFile(res, "datenschutz.html");
+    if (ICON_FILES[p]) return sendFile(res, `icon-${siteIcon()}${ICON_FILES[p]}`, 200, "no-cache");
     if (p === "/login") return isAdmin(req) ? redirect(res, safeNext(url.searchParams.get("next"))) : sendFile(res, "login.html");
     if (p === "/settings") return isAdmin(req) ? sendFile(res, "settings.html") : redirect(res, "/login?next=/settings");
 

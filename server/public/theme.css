@@ -176,10 +176,14 @@ html[data-design] header { border-image:linear-gradient(90deg, transparent, colo
 html[data-design] header h1 { font-size:16px; margin:0; font-weight:700; display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
 .brand { display:inline-flex; align-items:center; gap:10px; color:var(--fg) !important; text-decoration:none; white-space:nowrap; }
 .brand .bt span { color:var(--accent); }
-.brand .logo { width:26px; height:26px; border-radius:50%; flex:0 0 auto;
-  background:radial-gradient(circle at 50% 50%, var(--bg) 0 34%, transparent 36%),
-             conic-gradient(from 0deg, var(--accent), var(--blue), var(--ok), var(--accent));
-  box-shadow:0 0 12px var(--glow); }
+.brand .logo { width:30px; height:30px; flex:0 0 auto; filter:drop-shadow(0 0 6px var(--glow)); }
+.brand .logo::before { content:""; display:block; width:100%; height:100%; background:var(--accent);
+  -webkit-mask:var(--logo, url(/logo-mark.svg)) center/contain no-repeat; mask:var(--logo, url(/logo-mark.svg)) center/contain no-repeat; }
+.designs.icons { grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); }
+.designs .dsg .ipv { display:flex; align-items:center; gap:14px; height:64px; margin-bottom:10px; }
+.designs .dsg .ipv img { width:56px; height:56px; border-radius:12px; box-shadow:0 4px 14px -6px #000c; }
+.designs .dsg .ipv span { width:40px; height:40px; background:var(--accent); filter:drop-shadow(0 0 6px var(--glow));
+  -webkit-mask:var(--m) center/contain no-repeat; mask:var(--m) center/contain no-repeat; }
 .crumb { color:var(--dim); font-weight:400; }
 .hright { margin-left:auto; display:flex; align-items:center; gap:10px; }
 #status + .hright { margin-left:12px; }
