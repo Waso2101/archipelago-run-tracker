@@ -386,7 +386,7 @@
 const $ = id => document.getElementById(id);
 const POLL_MS = 4000;
 // /run-N is the overview; /run-N/<game>/poptracker one player's own tracker.
-// The server writes what this address shows: overview, one player's PopTracker, or my full tracker.
+// The server writes what this address shows: the overview or one player's PopTracker.
 const PAGE = window.PAGE || { run: Number((/^\/run-(\d+)/.exec(location.pathname) || [])[1]), mode: "overview" };
 const RUN = Number(PAGE.run);
 const PUBLIC = true;   // this build has only the public pages
