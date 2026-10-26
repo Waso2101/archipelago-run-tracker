@@ -1,0 +1,377 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Einstellungen · Archipelago Tracker</title>
+<link rel="stylesheet" href="/common.css?v=20">
+<script src="/common.js?v=20"></script>
+<style>
+  main { max-width:1300px; margin:0 auto; padding:24px 20px 60px;
+         display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); }
+  main > section:first-child { padding-right:28px; border-right:2px solid var(--line); }
+  main > section:last-child { padding-left:28px; }
+  h2 { font-size:18px; margin:0 0 16px; }
+  .grid2 { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:12px; margin-bottom:14px; }
+  .fld { margin-bottom:14px; }
+  .hint { font-size:13px; color:var(--dim); margin-top:4px; }
+  .box { border:2px solid var(--line); border-radius:10px; padding:16px; margin:6px 0 14px;
+         display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:14px 18px; }
+  .box .users { grid-column:2; }
+  .users ul { list-style:none; margin:0; padding:0; max-height:240px; overflow:auto; }
+  .users li { display:flex; justify-content:space-between; gap:8px; padding:5px 8px; border-radius:6px;
+              cursor:pointer; font-size:14px; }
+  .users li:hover { background:var(--panel2); }
+  .users li.sel { background:var(--panel2); box-shadow:inset 3px 0 0 var(--accent); }
+  .users li span { color:var(--dim); font-size:13px; text-align:right; }
+  .users .none { color:var(--dim); font-size:13px; }
+  .actions { display:flex; gap:12px; align-items:center; flex-wrap:wrap; }
+  #msg { min-height:1.3em; }
+  .run { background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:14px 16px; margin-bottom:12px; }
+  .run .hd { display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
+  .run .hd b { font-size:16px; }
+  .run .hd .pill { margin-left:auto; }
+  .run .kv { display:grid; grid-template-columns:auto minmax(0,1fr); gap:2px 12px; font-size:14px; margin:8px 0; }
+  .run .kv span:nth-child(odd) { color:var(--dim); }
+  .run .kv span { overflow-wrap:anywhere; }
+  .run .links { display:flex; gap:14px; font-size:14px; flex-wrap:wrap; margin-bottom:10px; }
+  .run .btns { display:flex; gap:8px; flex-wrap:wrap; align-items:center; }
+  .run .btns button { padding:6px 12px; font-size:14px; }
+  .run .btns select { width:auto; padding:5px 8px; font-size:14px; }
+  .run .linkfix { display:flex; gap:6px; margin:8px 0; }
+  .run .linkfix button { padding:6px 12px; font-size:14px; flex:0 0 auto; }
+  .run .err, .run .warnmsg { font-size:13px; margin:4px 0; }
+  @media (max-width:980px) {
+    main { grid-template-columns:minmax(0,1fr); padding:16px 16px 60px; }
+    main > section:first-child { border-right:none; border-bottom:2px solid var(--line); padding:0 0 24px; }
+    main > section:last-child { padding:24px 0 0; }
+  }
+  @media (max-width:560px) {
+    .grid2, .box { grid-template-columns:minmax(0,1fr); }
+    .box .users { grid-row:auto; grid-column:auto; }
+  }
+  .ic { font-family:"Material Symbols Rounded"; font-weight:normal; font-style:normal; font-size:18px; line-height:1;
+        display:inline-block; vertical-align:-4px; letter-spacing:normal; text-transform:none; white-space:nowrap;
+        direction:ltr; -webkit-font-smoothing:antialiased; font-variation-settings:"FILL" 0, "wght" 500; }
+  .run .btns button { display:inline-flex; align-items:center; gap:6px; }
+  .run .btns button.icon { padding:6px 9px; }
+  .run .links a { display:inline-flex; align-items:center; gap:4px; text-decoration:none; }
+  .run .links a:hover { text-decoration:underline; }
+  dialog#edit { max-width:560px; width:calc(100% - 32px); padding:0; color:var(--fg); }
+  dialog#edit::backdrop { background:#000b; backdrop-filter:blur(3px); }
+  #edit form { padding:20px 22px; }
+  #edit h3 { margin:0 0 4px; font-size:18px; display:flex; align-items:center; gap:8px; }
+  #edit .sub2 { color:var(--dim); font-size:13px; margin:0 0 16px; }
+  #edit .row2 { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:12px; }
+  #edit .fld { margin-bottom:12px; }
+  #edit .chk { display:flex; gap:8px; align-items:center; font-size:14px; margin:4px 0 10px; }
+  #edit .chk input { width:auto; }
+  #edit .foot { display:flex; gap:10px; align-items:center; justify-content:flex-end; margin-top:14px; flex-wrap:wrap; }
+  #edit .foot .err { margin-right:auto; }
+  @media (max-width:560px) { #edit .row2 { grid-template-columns:minmax(0,1fr); } }
+</style>
+<link rel="stylesheet" href="/theme.css?v=20">
+</head>
+<body>
+<header class="top"><h1><a class="brand" href="/" title="Alle Runs"><span class="logo" aria-hidden="true"></span><span class="bt">{{SITE_NAME}}</span></a></h1></header>
+<main>
+  <section>
+    <h2>Neuer Run</h2>
+    <form id="form" autocomplete="off">
+      <div class="fld">
+        <label class="f" for="link">Raum-Link für den Tracker</label>
+        <input id="link" placeholder="https://archipelago.gg/room/…">
+        <div class="hint">Füllt Adresse und Userliste aus, liefert X/Y für alle und lässt den Tracker dem Raum folgen, wenn er nach dem Einschlafen einen neuen Port bekommt.</div>
+      </div>
+      <div class="grid2">
+        <div><label class="f" for="addr">ip</label><input id="addr" placeholder="archipelago.gg:38281"></div>
+        <div><label class="f" for="pass">Passwort (meistens leer)</label><input id="pass" type="password" autocomplete="new-password"></div>
+      </div>
+      <div class="box">
+        <div>
+          <label class="f" for="slot">Dein User?</label>
+          <input id="slot" placeholder="dein Slot-Name" required>
+        </div>
+        <div class="users"><label class="f">Userliste</label><ul id="users"><li class="none">kommt aus dem Raum-Link</li></ul></div>
+      </div>
+      <div class="fld">
+        <label class="f" for="title">Name (optional)</label>
+        <input id="title" placeholder="Archipelago Run #…">
+      </div>
+      <label class="checkbox fld" style="display:flex;gap:8px;align-items:center">
+        <input type="checkbox" id="hidden" style="width:auto"> <span>Testlauf: unsichtbar für alle außer dir</span>
+      </label>
+      <div class="actions">
+        <button type="submit" id="go">Run anlegen</button>
+        <span id="msg"></span>
+      </div>
+    </form>
+  </section>
+  <section>
+    <h2>Standard-Design</h2>
+    <div class="hint" style="margin:-8px 0 12px">Gilt für alle, die oben im Kopf kein eigenes Design gewählt haben.</div>
+    <div class="designs" id="designs"></div>
+    <h2>Runs</h2>
+    <div id="runs"><div class="empty">lade…</div></div>
+  </section>
+</main>
+<dialog id="edit">
+  <form id="eform" autocomplete="off" method="dialog">
+    <h3><span class="ic">edit</span><span id="etitle">Run bearbeiten</span></h3>
+    <p class="sub2">Änderungen an Adresse, User oder Passwort verbinden den Tracker neu.</p>
+    <div class="fld"><label class="f" for="e_title">Name</label><input id="e_title" placeholder="Archipelago Run #…"></div>
+    <div class="fld"><label class="f" for="e_link">Raum-Link (nur ausfüllen, um ihn zu ändern)</label>
+      <input id="e_link" placeholder="https://archipelago.gg/room/…"></div>
+    <div class="row2">
+      <div class="fld"><label class="f" for="e_addr">Adresse (ip)</label><input id="e_addr" placeholder="archipelago.gg:38281"></div>
+      <div class="fld"><label class="f" for="e_slot">Dein User</label><input id="e_slot" required></div>
+    </div>
+    <div class="row2">
+      <div class="fld" style="grid-column:1 / -1"><label class="f" for="e_pass">Raum-Passwort (leer = bleibt)</label><input id="e_pass" type="password" autocomplete="new-password"></div>
+    </div>
+    <label class="chk" id="e_pclear_w"><input type="checkbox" id="e_pclear"> Passwort entfernen</label>
+    <label class="chk"><input type="checkbox" id="e_hidden"> <span class="ic">visibility_off</span> Testlauf: unsichtbar für alle außer dir</label>
+    <div class="foot">
+      <span class="err" id="eerr"></span>
+      <button type="button" class="sub" id="ecancel"><span class="ic">close</span> Abbrechen</button>
+      <button type="submit" id="esave"><span class="ic">save</span> Speichern</button>
+    </div>
+  </form>
+</dialog>
+
+<script>
+"use strict";
+const $ = id => document.getElementById(id);
+const prettyGame = g => (g || "?").replace(/([a-z0-9])([A-Z])/g, "$1 $2").replace(/([a-z])(\d)/g, "$1 $2");
+let lookupPlayers = [];
+let addrFromLink = "";
+
+async function api(path, body) {
+  const r = await fetch(path, body === undefined ? { cache: "no-store" }
+    : { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(body) });
+  if (r.status === 401) { location.href = "/login?next=/settings"; throw new Error("Bitte einloggen."); }
+  const j = await r.json();
+  if (!r.ok) throw new Error(j.error || "Fehler");
+  return j;
+}
+
+function msg(text, cls) { $("msg").className = cls || ""; $("msg").textContent = text || ""; }
+
+// ---- Room link -> address + user list ----
+function renderUsers() {
+  const ul = $("users");
+  ul.innerHTML = "";
+  if (!lookupPlayers.length) { ul.innerHTML = `<li class="none">kommt aus dem Raum-Link</li>`; return; }
+  for (const p of lookupPlayers) {
+    const li = document.createElement("li");
+    li.className = p.name.toLowerCase() === $("slot").value.trim().toLowerCase() ? "sel" : "";
+    li.innerHTML = `<b></b><span></span>`;
+    li.querySelector("b").textContent = p.name;
+    li.querySelector("span").textContent = prettyGame(p.game);
+    li.onclick = () => pickUser(p);
+    ul.appendChild(li);
+  }
+}
+
+function pickUser(p) {
+  $("slot").value = p.name;
+  renderUsers();
+}
+
+let lookupTimer = null, lookupSeq = 0;
+$("link").addEventListener("input", () => {
+  clearTimeout(lookupTimer);
+  lookupTimer = setTimeout(lookup, 500);
+});
+async function lookup() {
+  const link = $("link").value.trim();
+  const seq = ++lookupSeq;
+  if (!link) { lookupPlayers = []; renderUsers(); msg(""); return; }
+  msg("frage archipelago.gg…", "hint");
+  try {
+    const j = await api("/api/admin/lookup", { link });
+    if (seq !== lookupSeq) return;
+    lookupPlayers = j.players || [];
+    if (j.addr && (!$("addr").value.trim() || $("addr").value.trim() === addrFromLink)) {
+      $("addr").value = j.addr; addrFromLink = j.addr;
+    }
+    renderUsers();
+    msg(`${lookupPlayers.length} Spieler gefunden. Klick auf deinen Namen.`, "okmsg");
+  } catch (e) { if (seq === lookupSeq) { lookupPlayers = []; renderUsers(); msg(e.message, "err"); } }
+}
+$("slot").addEventListener("input", renderUsers);
+
+$("form").onsubmit = async e => {
+  e.preventDefault();
+  $("go").disabled = true;
+  msg("verbinde mit dem Raum… (bis zu 15 s)", "hint");
+  try {
+    const j = await api("/api/admin/runs", {
+      link: $("link").value.trim(), addr: $("addr").value.trim(), password: $("pass").value,
+      slot: $("slot").value.trim(), title: $("title").value.trim(),
+      hidden: $("hidden").checked,
+    });
+    $("form").reset(); lookupPlayers = []; addrFromLink = ""; renderUsers();
+    msg(j.warning ? `Run #${j.id} angelegt. ${j.warning}` : `Run #${j.id} angelegt und verbunden.`, j.warning ? "warnmsg" : "okmsg");
+    loadRuns();
+  } catch (err) { msg(err.message, "err"); }
+  $("go").disabled = false;
+};
+
+// ---- Existing runs ----
+const STATUS = { verbunden: "verbunden", verbinde: "verbinde…", offline: "offline", abgelehnt: "abgelehnt", beendet: "beendet", gestoppt: "gestoppt" };
+
+function runCard(r) {
+  const d = document.createElement("div");
+  d.className = "run";
+  const n = r.players.length;
+  const pillCls = !r.ended ? (r.status === "verbunden" ? "live" : "") : (n && r.goals >= n ? "done" : n ? "partial" : "ended");
+  const pillTxt = !r.ended ? STATUS[r.status] || r.status : (n && r.goals >= n ? "Completed" : n ? `Completed: ${r.goals}/${n}` : "beendet");
+  d.innerHTML = `<div class="hd"><b></b><span class="pill ${pillCls}"></span></div>
+    <div class="kv"></div><div class="links"></div><div class="extra"></div><div class="btns"></div>`;
+  d.querySelector(".hd b").textContent = `#${r.id} · ${r.title || "Archipelago Run #" + r.id}`;
+  if (r.hidden) {
+    const h = document.createElement("span");
+    h.className = "pill hidden-run";
+    h.textContent = "unsichtbar";
+    h.title = "Testlauf: nur du siehst diesen Run";
+    d.querySelector(".hd b").after(h);
+  }
+  d.querySelector(".pill").textContent = pillTxt;
+  const kv = d.querySelector(".kv");
+  const row = (k, v) => { for (const x of [k, v]) { const s = document.createElement("span"); s.textContent = x; kv.appendChild(s); } };
+  row("Adresse", r.addr + (r.has_password ? " (mit Passwort)" : ""));
+  row("Dein User", r.slot_name);
+  row("Spieler", n ? r.players.map(p => p.name + (p.goal ? " (Ziel)" : p.released ? " (released)" : "")).join(", ") : "noch unbekannt");
+  row("Gestartet", r.created ? fmtDate(r.created) : "–");
+  if (r.ended) row("Beendet", fmtDate(r.ended));
+  if (r.seed) row("Seed", r.seed);
+
+  const links = d.querySelector(".links");
+  const link = (href, icon, text) => { const a = document.createElement("a"); a.href = href; a.innerHTML = ic(icon); a.append(text); links.appendChild(a); };
+  link(`/run-${r.id}`, "monitoring", "Übersicht");
+  link(`/run-${r.id}/log`, "description", "Log-Datei");
+
+  const extra = d.querySelector(".extra");
+  if (r.error && !r.ended) {
+    const e = document.createElement("div"); e.className = "err"; e.textContent = r.error; extra.appendChild(e);
+  }
+  if (!r.ended && !r.has_room_id && r.addr.startsWith("archipelago.gg:")) {
+    const w = document.createElement("div");
+    w.className = "warnmsg";
+    w.textContent = r.has_link
+      ? "Raum-Link nochmal eintragen, damit der Tracker einem neuen Port folgen kann:"
+      : "Kein Raum-Link: ohne ihn gibt es kein X/Y für alle und keinen automatischen Port-Wechsel.";
+    extra.appendChild(w);
+    const f = document.createElement("form");
+    f.className = "linkfix";
+    f.innerHTML = `<input placeholder="https://archipelago.gg/room/…"><button class="sub" type="submit">Speichern</button>`;
+    f.onsubmit = async e => {
+      e.preventDefault();
+      try { await api(`/api/admin/runs/${r.id}`, { action: "link", link: f.querySelector("input").value }); loadRuns(); }
+      catch (err) { w.className = "err"; w.textContent = err.message; }
+    };
+    extra.appendChild(f);
+  }
+
+  const btns = d.querySelector(".btns");
+  const b = (icon, text, cls, fn, tip) => {
+    const x = document.createElement("button");
+    x.type = "button"; x.className = cls; x.innerHTML = ic(icon); if (text) x.append(text);
+    if (tip) x.title = tip;
+    x.onclick = fn; btns.appendChild(x);
+  };
+  b("edit", "Bearbeiten", "", () => openEdit(r));
+  b(r.hidden ? "visibility" : "visibility_off", r.hidden ? "Sichtbar machen" : "Unsichtbar", "sub", () => act(r.id, { action: r.hidden ? "show" : "hide" }));
+  if (r.ended) b("replay", "Wieder öffnen", "sub", () => act(r.id, { action: "reopen" }));
+  else b("stop_circle", "Beenden", "sub", () => confirm(`Run #${r.id} beenden? Der Tracker hört dann auf mitzuschreiben.`) && act(r.id, { action: "end" }));
+  b("delete", "", "danger icon", () => confirm(`Run #${r.id} mit allen Daten und dem Log endgültig löschen?`) && act(r.id, { action: "delete" }), "Löschen");
+  return d;
+}
+
+// ---- Edit dialog ----
+let editing = null;
+function openEdit(r) {
+  editing = r;
+  $("etitle").textContent = `Run #${r.id} bearbeiten`;
+  $("e_title").value = r.title || "";
+  $("e_link").value = "";
+  $("e_addr").value = r.addr || "";
+  $("e_slot").value = r.slot_name || "";
+  $("e_pass").value = "";
+  $("e_pclear").checked = false;
+  $("e_pclear_w").hidden = !r.has_password;
+  $("e_hidden").checked = !!r.hidden;
+  $("eerr").textContent = "";
+  $("edit").showModal();
+}
+$("ecancel").onclick = () => $("edit").close();
+$("eform").onsubmit = async e => {
+  e.preventDefault();
+  const r = editing;
+  $("esave").disabled = true;
+  $("eerr").textContent = "";
+  try {
+    const body = { action: "edit", title: $("e_title").value.trim(), hidden: $("e_hidden").checked };
+    if ($("e_addr").value.trim() !== (r.addr || "")) body.addr = $("e_addr").value.trim();
+    if ($("e_slot").value.trim() !== (r.slot_name || "")) body.slot = $("e_slot").value.trim();
+    if ($("e_pclear").checked) body.password_clear = true;
+    else if ($("e_pass").value) body.password = $("e_pass").value;
+    await api(`/api/admin/runs/${r.id}`, body);
+    if ($("e_link").value.trim()) await api(`/api/admin/runs/${r.id}`, { action: "link", link: $("e_link").value.trim() });
+    $("edit").close();
+    loadRuns();
+  } catch (err) { $("eerr").textContent = err.message; }
+  $("esave").disabled = false;
+};
+
+async function act(id, body) {
+  try { await api(`/api/admin/runs/${id}`, body); } catch (e) { alert(e.message); }
+  loadRuns();
+}
+
+async function loadRuns() {
+  try {
+    const j = await api("/api/admin/runs");
+    const host = $("runs");
+    host.innerHTML = "";
+    if (!j.runs.length) host.innerHTML = `<div class="empty">Noch keine Runs.</div>`;
+    for (const r of j.runs) host.appendChild(runCard(r));
+  } catch (e) { $("runs").innerHTML = `<div class="err"></div>`; $("runs").firstChild.textContent = e.message; }
+}
+
+// Header: Logout in front of language + settings.
+const logout = document.createElement("button");
+logout.className = "sub"; logout.type = "button"; logout.textContent = "Logout";
+logout.onclick = async () => { await fetch("/api/logout", { method: "POST" }); location.href = "/"; };
+langToggle(null, [logout]);
+
+// Standard design for every visitor who has not picked their own in the header.
+let siteDesign = SITE_DESIGN;
+function renderDesigns() {
+  const host = $("designs");
+  host.innerHTML = "";
+  for (const d of DESIGNS) {
+    const b = document.createElement("button");
+    b.type = "button";
+    b.className = "dsg" + (d.id === siteDesign ? " on" : "");
+    b.innerHTML = `<div class="pv" data-design="${d.id}"><u></u><b></b><i></i></div><div class="nm"></div><div class="sb"></div>`;
+    b.querySelector(".nm").textContent = d.name + (d.id === siteDesign ? " · Standard" : "");
+    b.querySelector(".sb").textContent = d.sub;
+    b.onclick = async () => {
+      try {
+        await api("/api/admin/site", { design: d.id });
+        siteDesign = d.id;
+        renderDesigns();
+      } catch (e) { alert(e.message); }
+    };
+    host.appendChild(b);
+  }
+}
+renderDesigns();
+loadRuns();
+setInterval(() => { if (!$("edit").open && !document.querySelector(".run input:focus, .run select:focus")) loadRuns(); }, 15000);
+</script>
+</body>
+</html>

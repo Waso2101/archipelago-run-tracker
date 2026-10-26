@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Archipelago Tracker</title>
+<link rel="stylesheet" href="/common.css?v=20">
+<script src="/common.js?v=20"></script>
+<style>
+  main { max-width:1280px; margin:0 auto; padding:28px 20px 80px;
+         display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.6fr); gap:0; }
+  .intro { padding-right:32px; border-right:2px solid var(--line); position:sticky; top:24px; align-self:start; }
+  .intro h2 { font-size:28px; line-height:1.2; margin:0 0 14px; }
+  .intro h2 span { color:var(--accent); }
+  .intro p { color:var(--dim); font-size:16px; margin:0 0 12px; max-width:46ch; }
+  .intro .stats { display:flex; gap:22px; margin-top:22px; }
+  .intro .stats div { font-size:13px; color:var(--dim); text-transform:uppercase; letter-spacing:.5px; }
+  .intro .stats b { display:block; font-size:26px; color:var(--fg); letter-spacing:0; font-variant-numeric:tabular-nums; }
+  .list { padding-left:32px; display:flex; flex-direction:column; gap:14px; }
+  .list h3 { margin:6px 0 0; font-size:13px; color:var(--dim); text-transform:uppercase; letter-spacing:.6px; font-weight:600; }
+  .card { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:4px 20px;
+          background:var(--panel); border:2px solid var(--line); border-radius:22px;
+          padding:16px 22px; color:inherit; text-decoration:none; transition:border-color .15s, transform .15s; }
+  .card:hover { border-color:var(--accent); transform:translateY(-1px); }
+  .card.running { border-color:#2f5a3c; }
+  .card.running:hover { border-color:var(--ok); }
+  .card .tt { font-size:17px; font-weight:700; }
+  .card .row { font-size:14px; color:var(--dim); overflow-wrap:anywhere; }
+  .card .row b { color:var(--fg); font-weight:500; }
+  .card .row .g { color:var(--ok); } .card .row .r { color:var(--warn); }
+  .card .side { grid-column:2; grid-row:1 / span 3; text-align:right; font-size:13px; color:var(--dim);
+                display:flex; flex-direction:column; align-items:flex-end; gap:3px; }
+  .card .side .pill { margin-top:6px; }
+  .card .side b { color:var(--fg); font-weight:500; font-variant-numeric:tabular-nums; }
+  .card .foot { grid-column:1 / -1; display:flex; gap:16px; font-size:13px; color:var(--dim); margin-top:4px; }
+  .card .foot .d { color:var(--err); }
+  @media (max-width:900px) {
+    main { grid-template-columns:minmax(0,1fr); padding:20px 16px 80px; }
+    .intro { border-right:none; border-bottom:2px solid var(--line); padding:0 0 20px; position:static; }
+    .list { padding:20px 0 0; }
+  }
+  @media (max-width:520px) {
+    .card { grid-template-columns:minmax(0,1fr); padding:14px 16px; border-radius:16px; }
+    .card .side { grid-column:1; grid-row:auto; text-align:left; align-items:flex-start; }
+  }
+</style>
+<link rel="stylesheet" href="/theme.css?v=20">
+</head>
+<body>
+<header class="top"><h1><a class="brand" href="/" title="Alle Runs"><span class="logo" aria-hidden="true"></span><span class="bt">{{SITE_NAME}}</span></a></h1></header>
+<main>
+  <section class="intro">
+    <h2 data-i18n-html="hello">Willkommen bei <span>{{SITE_NAME}}</span></h2>
+    <p data-i18n="intro1">Hier seht ihr die Archipelago-Runs dieser Gruppe, laufende und vergangene.</p>
+    <p data-i18n="intro2">Ein Klick auf einen Run zeigt den Live-Stand: wer wie weit ist, wer wie oft gestorben ist und das komplette Log.</p>
+    <div class="stats">
+      <div><b id="nruns">–</b><span data-i18n="runs">Runs</span></div>
+      <div><b id="nlive">–</b><span data-i18n="running">laufen</span></div>
+      <div><b id="ndeaths">–</b><span data-i18n="deaths">Tode</span></div>
+    </div>
+  </section>
+  <section class="list" id="list"><div class="empty" data-i18n="loading">lade…</div></section>
+</main>
+<script>
+"use strict";
+Object.assign(I18N.de, {
+  settings: "Einstellungen", hello: "Willkommen bei <span>{{SITE_NAME}}</span>",
+  intro1: "Hier seht ihr die Archipelago-Runs dieser Gruppe, laufende und vergangene.",
+  intro2: "Ein Klick auf einen Run zeigt den Live-Stand: wer wie weit ist, wer wie oft gestorben ist und das komplette Log.",
+  runs: "Runs", running: "laufen", deaths: "Tode", loading: "lade…", none: "Noch keine Runs.",
+  nowRunning: "Läuft gerade", past: "Vergangene Runs", run: "Archipelago Run #{n}",
+  players: "Spieler", games: "Spiele", started: "Gestartet", completed: "Completed", duration: "Dauer",
+  live: "läuft", sleeping: "läuft · Raum schläft", done: "Completed", partial: "Completed: {x}/{y}",
+  ended: "beendet", goals: "Ziele {x}/{y}", nDeaths: "{n} Tode", err: "Tracker gerade nicht erreichbar.",
+  goalTip: "Ziel erreicht", relTip: "released, Ziel nicht erreicht", hiddenRun: "unsichtbar · nur du",
+});
+Object.assign(I18N.en, {
+  settings: "Settings", hello: "Welcome to <span>{{SITE_NAME}}</span>",
+  intro1: "These are the Archipelago runs of this group, running and finished.",
+  intro2: "Click a run for the live state: who is how far along, who died how often, and the full log.",
+  runs: "Runs", running: "running", deaths: "Deaths", loading: "loading…", none: "No runs yet.",
+  nowRunning: "Running now", past: "Past runs", run: "Archipelago Run #{n}",
+  players: "Players", games: "Games", started: "Started", completed: "Completed", duration: "Duration",
+  live: "running", sleeping: "running · room asleep", done: "Completed", partial: "Completed: {x}/{y}",
+  ended: "ended", goals: "Goals {x}/{y}", nDeaths: "{n} deaths", err: "Tracker not reachable right now.",
+  goalTip: "goal reached", relTip: "released, goal not reached", hiddenRun: "hidden · only you",
+});
+
+const $ = id => document.getElementById(id);
+const prettyGame = g => (g || "?").replace(/([a-z0-9])([A-Z])/g, "$1 $2").replace(/([a-z])(\d)/g, "$1 $2");
+let RUNS = null;
+
+function el(tag, cls, text) {
+  const e = document.createElement(tag);
+  if (cls) e.className = cls;
+  if (text != null) e.textContent = text;
+  return e;
+}
+
+/** "Spieler: a | b | c" with goal/release colours. */
+function nameRow(label, list) {
+  const r = el("div", "row");
+  r.appendChild(document.createTextNode(label + ": "));
+  list.forEach((x, i) => {
+    if (i) r.appendChild(document.createTextNode(" | "));
+    const s = el("b", x.cls, x.text);
+    if (x.tip) s.title = x.tip;
+    r.appendChild(s);
+  });
+  return r;
+}
+
+function card(run) {
+  const a = el("a", "card" + (run.ended ? "" : " running"));
+  a.href = `/run-${run.id}`;
+  const n = run.players.length;
+  a.appendChild(el("div", "tt", run.title || t("run", { n: run.id })));
+  a.appendChild(nameRow(t("players"), run.players.map(p => ({
+    text: p.name, cls: p.goal ? "g" : p.released ? "r" : "",
+    tip: p.goal ? t("goalTip") : p.released ? t("relTip") : "" }))));
+  const games = [...new Set(run.players.map(p => prettyGame(p.game)))];
+  a.appendChild(nameRow(t("games"), games.map(g => ({ text: g }))));
+
+  const side = el("div", "side");
+  const line = (k, v) => { const d = el("div"); d.textContent = k + ": "; d.appendChild(el("b", "", v)); side.appendChild(d); };
+  line(t("started"), run.created ? fmtDate(run.created) : "–");
+  line(t("completed"), run.ended ? fmtDate(run.ended) : "–");
+  let pill;
+  if (!run.ended) pill = el("span", "pill" + (run.status === "verbunden" ? " live" : ""), run.status === "verbunden" ? t("live") : t("sleeping"));
+  else if (n && run.goals >= n) pill = el("span", "pill done", t("done"));
+  else if (n) pill = el("span", "pill partial", t("partial", { x: run.goals, y: n }));
+  else pill = el("span", "pill ended", t("ended"));
+  side.appendChild(pill);
+  if (run.hidden) side.appendChild(el("span", "pill hidden-run", t("hiddenRun")));
+  a.appendChild(side);
+
+  const foot = el("div", "foot");
+  if (!run.ended && n) foot.appendChild(el("span", "", t("goals", { x: run.goals, y: n })));
+  if (run.created) foot.appendChild(el("span", "", t("duration") + ": " + fmtSpan(run.created, run.ended || Date.now())));
+  const dd = el("span", "d", t("nDeaths", { n: run.deaths }));
+  dd.prepend(icEl("skull"), " ");
+  foot.appendChild(dd);
+  a.appendChild(foot);
+  return a;
+}
+
+function render() {
+  const host = $("list");
+  if (!RUNS) return;
+  host.innerHTML = "";
+  $("nruns").textContent = RUNS.length;
+  $("nlive").textContent = RUNS.filter(r => !r.ended).length;
+  $("ndeaths").textContent = RUNS.reduce((a, r) => a + r.deaths, 0);
+  if (!RUNS.length) { host.appendChild(el("div", "empty", t("none"))); return; }
+  const live = RUNS.filter(r => !r.ended), past = RUNS.filter(r => r.ended);
+  if (live.length) { host.appendChild(el("h3", "", t("nowRunning"))); live.forEach(r => host.appendChild(card(r))); }
+  if (past.length) { host.appendChild(el("h3", "", t("past"))); past.forEach(r => host.appendChild(card(r))); }
+}
+
+async function load() {
+  try {
+    const j = await (await fetch("/api/runs", { cache: "no-store", credentials: "same-origin" })).json();
+    RUNS = j.runs;
+    render();
+  } catch (e) {
+    if (!RUNS) $("list").innerHTML = `<div class="empty">${t("err")}</div>`;
+  }
+  setTimeout(load, 30000);
+}
+
+applyI18n();
+langToggle(render);
+load();
+</script>
+</body>
+</html>

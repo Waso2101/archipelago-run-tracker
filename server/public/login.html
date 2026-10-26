@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Login · Archipelago Tracker</title>
+<link rel="stylesheet" href="/common.css?v=20">
+<script src="/common.js?v=20"></script>
+<style>
+  main { min-height:calc(100vh - 60px); display:flex; align-items:center; justify-content:center; padding:16px; }
+  .card { background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:26px;
+          width:100%; max-width:380px; }
+  .card h2 { margin:0 0 6px; font-size:18px; }
+  .card p { color:var(--dim); font-size:14px; margin:0 0 18px; }
+  .card button { width:100%; margin-top:12px; padding:10px; }
+  .card .err { margin-top:10px; min-height:1.3em; }
+</style>
+<link rel="stylesheet" href="/theme.css?v=20">
+</head>
+<body>
+<header class="top"><h1><a class="brand" href="/" title="Alle Runs"><span class="logo" aria-hidden="true"></span><span class="bt">{{SITE_NAME}}</span></a></h1></header>
+<main>
+  <form class="card" id="form">
+    <h2 data-i18n="title">Login</h2>
+    <p data-i18n="sub">Nur für den Betreiber: Runs anlegen und verwalten.</p>
+    <label class="f" for="pw" data-i18n="pw">Passwort</label>
+    <input id="pw" type="password" autocomplete="current-password" required autofocus>
+    <button type="submit" id="btn" data-i18n="go">Einloggen</button>
+    <div class="err" id="err"></div>
+  </form>
+</main>
+<script>
+"use strict";
+Object.assign(I18N.de, { title: "Login", sub: "Nur für den Betreiber: Runs anlegen und verwalten.", pw: "Passwort", go: "Einloggen", wait: "prüfe…" });
+Object.assign(I18N.en, { title: "Login", sub: "Admin only: add and manage runs.", pw: "Password", go: "Log in", wait: "checking…" });
+applyI18n();
+langToggle();
+const $ = id => document.getElementById(id);
+$("form").onsubmit = async e => {
+  e.preventDefault();
+  $("err").textContent = "";
+  $("btn").disabled = true;
+  $("btn").textContent = t("wait");
+  try {
+    const r = await fetch("/api/login", { method: "POST", headers: { "content-type": "application/json" },
+      body: JSON.stringify({ password: $("pw").value, next: new URLSearchParams(location.search).get("next") }) });
+    const j = await r.json();
+    if (!r.ok) throw new Error(j.error || "Fehler");
+    location.href = j.next || "/settings";
+  } catch (err) {
+    $("err").textContent = err.message;
+    $("pw").select();
+  } finally {
+    $("btn").disabled = false;
+    $("btn").textContent = t("go");
+  }
+};
+</script>
+</body>
+</html>

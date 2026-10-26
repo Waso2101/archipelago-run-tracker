@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Datenschutz · Archipelago Tracker</title>
+<link rel="stylesheet" href="/common.css?v=20">
+<script src="/common.js?v=20"></script>
+<style>
+  main { max-width:820px; margin:0 auto; padding:30px 20px 80px; }
+  .doc { padding:28px 32px; }
+  .doc h2 { margin:0 0 6px; font-size:26px; }
+  .doc .lead { color:var(--dim); margin:0 0 22px; }
+  .doc h3 { font-size:17px; margin:26px 0 8px; display:flex; align-items:center; gap:8px; }
+  .doc h3 .ic { color:var(--accent); }
+  .doc p, .doc li { line-height:1.65; }
+  .doc ul { padding-left:20px; margin:8px 0; }
+  .doc code { background:var(--panel2); border:1px solid var(--line); border-radius:5px; padding:1px 6px; font-size:.92em; }
+  .doc table { width:100%; border-collapse:collapse; margin:8px 0; font-size:14px; }
+  .doc th, .doc td { text-align:left; padding:8px 10px; border-bottom:1px solid var(--line); vertical-align:top; }
+  .doc th { color:var(--dim); font-weight:600; }
+  .doc .stand { color:var(--dim); font-size:13px; margin-top:28px; }
+  article[data-lang]:not(.show) { display:none; }
+  @media (max-width:600px) { .doc { padding:20px 18px; } .doc table { font-size:13px; } }
+</style>
+<link rel="stylesheet" href="/theme.css?v=20">
+</head>
+<body>
+<header class="top"><h1><a class="brand" href="/" title="Alle Runs"><span class="logo" aria-hidden="true"></span><span class="bt">{{SITE_NAME}}</span></a></h1></header>
+<main>
+<!-- Vorlage: bitte an den eigenen Betrieb anpassen (Kontakt, Hosting, Logs). -->
+<article class="card doc" data-lang="de">
+  <h2>Datenschutz</h2>
+  <p class="lead">Kurz gesagt: Diese Seite ist ein privates Hobby-Projekt. Sie nutzt kein Tracking, keine Werbung und lädt nichts von fremden Servern.</p>
+
+  <h3><span class="ic">person</span>Wer die Seite betreibt</h3>
+  <p>{{SITE_OWNER}}, als privates, nicht-kommerzielles Projekt für eine Archipelago-Spielgruppe.</p>
+
+  <h3><span class="ic">dns</span>Beim Aufruf der Seite</h3>
+  <p>Damit die Seite bei dir ankommt, verarbeitet der Server technisch deine IP-Adresse. Es werden dabei
+     <b>keine Zugriffs-Protokolle gespeichert</b>. Bei falschen Login-Versuchen merkt sich der Server die IP-Adresse
+     für höchstens 15 Minuten im Arbeitsspeicher, um Passwort-Raten zu bremsen. Danach ist sie weg.</p>
+  <p>Schriften und Icons liegen auf diesem Server selbst. Es werden <b>keine Inhalte von Google oder anderen Dritten</b> geladen.</p>
+
+  <h3><span class="ic">cookie</span>Cookies und Speicher im Browser</h3>
+  <table>
+    <tr><th>Name</th><th>Wofür</th><th>Wer</th></tr>
+    <tr><td><code>sid</code> (Cookie)</td><td>Login-Sitzung für die Verwaltung, 30 Tage</td><td>nur der Betreiber nach dem Login</td></tr>
+    <tr><td><code>tracker_lang</code></td><td>gewählte Sprache</td><td>alle, die sie umstellen</td></tr>
+    <tr><td><code>tracker_design</code></td><td>gewähltes Design</td><td>alle, die es umstellen</td></tr>
+    <tr><td><code>tracker_notice</code></td><td>dass der Hinweis unten weggeklickt wurde</td><td>alle</td></tr>
+  </table>
+  <p>Alles davon ist technisch nötig oder speichert nur deine eigene Einstellung in deinem Browser. Es wird nichts davon
+     ausgewertet oder weitergegeben. Deshalb braucht es dafür keine Einwilligung. Du kannst die Einträge jederzeit über
+     die Browser-Einstellungen löschen.</p>
+
+  <h3><span class="ic">sports_esports</span>Spieldaten, die angezeigt werden</h3>
+  <p>Der Tracker zeigt, was in den Archipelago-Räumen der Gruppe passiert: Spielernamen (die Slot-Namen aus Archipelago),
+     gespielte Spiele, Fortschritt, gefundene Items, Hints, Tode und das Log des Raums. Diese Daten kommen aus dem
+     Archipelago-Raum selbst und aus der öffentlichen Tracker-Schnittstelle von archipelago.gg. Dein Browser spricht dabei
+     nicht mit archipelago.gg, das macht nur der Server.</p>
+  <p>Als Test markierte Runs sind nur nach dem Login sichtbar.</p>
+
+  <h3><span class="ic">gavel</span>Deine Rechte</h3>
+  <p>Du kannst Auskunft über deine Daten verlangen und dass sie berichtigt oder gelöscht werden, zum Beispiel ein Run
+     oder dein Spielername. Melde dich dafür einfach bei {{SITE_OWNER}}.</p>
+
+  <p class="stand">Stand: Oktober 2026</p>
+</article>
+
+<article class="card doc" data-lang="en">
+  <h2>Privacy</h2>
+  <p class="lead">In short: this site is a private hobby project. No tracking, no ads, nothing is loaded from other servers.</p>
+  <h3><span class="ic">person</span>Who runs it</h3>
+  <p>{{SITE_OWNER}}, as a private, non-commercial project for an Archipelago group.</p>
+  <h3><span class="ic">dns</span>When you open the site</h3>
+  <p>To deliver the page the server processes your IP address. <b>No access logs are stored.</b> After failed login
+     attempts the server keeps the IP address in memory for at most 15 minutes to slow down password guessing.</p>
+  <p>Fonts and icons are served from this server. <b>Nothing is loaded from Google or other third parties.</b></p>
+  <h3><span class="ic">cookie</span>Cookies and browser storage</h3>
+  <table>
+    <tr><th>Name</th><th>Purpose</th><th>Who</th></tr>
+    <tr><td><code>sid</code> (cookie)</td><td>login session for admin pages, 30 days</td><td>only the operator after logging in</td></tr>
+    <tr><td><code>tracker_lang</code></td><td>chosen language</td><td>anyone who changes it</td></tr>
+    <tr><td><code>tracker_design</code></td><td>chosen design</td><td>anyone who changes it</td></tr>
+    <tr><td><code>tracker_notice</code></td><td>that the notice below was dismissed</td><td>everyone</td></tr>
+  </table>
+  <p>All of this is strictly necessary or only stores your own setting in your browser. Nothing is analysed or shared, so
+     no consent is needed. You can delete these entries in your browser settings at any time.</p>
+  <h3><span class="ic">sports_esports</span>Game data shown</h3>
+  <p>The tracker shows what happens in the group's Archipelago rooms: player names (Archipelago slot names), games,
+     progress, items, hints, deaths and the room log. This comes from the Archipelago room and the public tracker API of
+     archipelago.gg, fetched by the server, not by your browser.</p>
+  <p>Runs marked as tests are only visible after logging in.</p>
+  <h3><span class="ic">gavel</span>Your rights</h3>
+  <p>You can ask what data is stored about you and have it corrected or deleted, for example a run or your player name.
+     Just contact {{SITE_OWNER}}.</p>
+  <p class="stand">Last updated: October 2026</p>
+</article>
+</main>
+<script>
+"use strict";
+const showLang = () => document.querySelectorAll("[data-lang]").forEach(a => a.classList.toggle("show", a.dataset.lang === LANG));
+showLang();
+langToggle(showLang);
+</script>
+</body>
+</html>

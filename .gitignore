@@ -1,0 +1,5 @@
+.env
+data/
+ap-logic/apworlds/*.apworld
+node_modules/
+*.log
