@@ -9,7 +9,7 @@
   --fg:#ece4d2; --dim:#a39a86; --accent:#d4a84a; --ok:#7fb069; --warn:#e0a24a; --err:#d4574e; --blue:#9fb4d8;
   --accent-ink:#1b1408;
   --page-bg: radial-gradient(1200px 600px at 50% -10%, #2a2214 0%, transparent 70%), radial-gradient(900px 500px at 100% 100%, #1a140c 0%, transparent 70%), #0e0d0b;
-  --card-bg: linear-gradient(180deg, #1f1c17 0%, #171511 100%);
+  --card-bg: linear-gradient(180deg, #1f1c17d4 0%, #171511e0 100%);
   --card-border:#3d3526; --card-shadow: 0 1px 0 #ffffff0a inset, 0 12px 30px -12px #000d;
   --head-bg: linear-gradient(180deg, #1d1a14f2, #14120ef2);
   --btn-bg: linear-gradient(180deg, #f0cf7a 0%, #c99a3a 55%, #a87b26 100%);
@@ -23,7 +23,7 @@
   --fg:#ece3d3; --dim:#9fa79e; --accent:#c98b4e; --ok:#8fbf8a; --warn:#e0a24a; --err:#d0574e; --blue:#8fb8b0;
   --accent-ink:#1a0f05;
   --page-bg: radial-gradient(1100px 600px at 30% -12%, #1f3b3666 0%, transparent 70%), radial-gradient(800px 500px at 100% 110%, #3a241455 0%, transparent 70%), #0b1211;
-  --card-bg: linear-gradient(180deg, #15201e 0%, #0f1716 100%);
+  --card-bg: linear-gradient(180deg, #15201ed4 0%, #0f1716e0 100%);
   --card-border:#3a4a42; --card-shadow: 0 1px 0 #ffffff0a inset, 0 12px 30px -12px #000d;
   --head-bg: linear-gradient(180deg, #131d1bf2, #0c1312f2);
   --btn-bg: linear-gradient(180deg, #ecc08a 0%, #c98b4e 55%, #9a6332 100%);
@@ -37,7 +37,7 @@
   --fg:#efe6d6; --dim:#ad9fb8; --accent:#d8b46a; --ok:#8cc47e; --warn:#e8a54a; --err:#e05d5d; --blue:#a99be0;
   --accent-ink:#1a1205;
   --page-bg: radial-gradient(1000px 560px at 70% -12%, #4a2a6a66 0%, transparent 70%), radial-gradient(800px 500px at 0% 110%, #2a163d88 0%, transparent 70%), #0e0a14;
-  --card-bg: linear-gradient(180deg, #1b1323 0%, #130e1a 100%);
+  --card-bg: linear-gradient(180deg, #1b1323d4 0%, #130e1ae0 100%);
   --card-border:#4a3858; --card-shadow: 0 1px 0 #ffffff0a inset, 0 12px 30px -12px #000d;
   --head-bg: linear-gradient(180deg, #1a1222f2, #110c17f2);
   --btn-bg: linear-gradient(180deg, #f2d89a 0%, #d8b46a 50%, #a8823a 100%);
@@ -51,7 +51,7 @@
   --fg:#e2ddd2; --dim:#9a958a; --accent:#e8823a; --ok:#9cb36e; --warn:#e0a24a; --err:#d24c3c; --blue:#a9b0b8;
   --accent-ink:#1a0c03;
   --page-bg: radial-gradient(900px 500px at 50% 120%, #5a2a0e55 0%, transparent 70%), radial-gradient(1200px 600px at 50% -20%, #2a2824 0%, transparent 70%), #0c0c0b;
-  --card-bg: linear-gradient(180deg, #1a1916 0%, #121110 100%);
+  --card-bg: linear-gradient(180deg, #1a1916d4 0%, #121110e0 100%);
   --card-border:#38352f; --card-shadow: 0 1px 0 #ffffff0a inset, 0 12px 30px -12px #000d;
   --head-bg: linear-gradient(180deg, #181714f2, #100f0df2);
   --btn-bg: linear-gradient(180deg, #ffb070 0%, #e8823a 55%, #b0521c 100%);
@@ -65,7 +65,7 @@
   --fg:#f1ebdf; --dim:#a6a2a8; --accent:#e0444b; --ok:#8fcfa0; --warn:#e8b45a; --err:#ff5a60; --blue:#b9c2e6;
   --accent-ink:#ffffff;
   --page-bg: radial-gradient(900px 520px at 85% -10%, #5a1a2244 0%, transparent 70%), radial-gradient(1000px 600px at 10% 110%, #1b2240 0%, transparent 70%), #0a0c13;
-  --card-bg: linear-gradient(180deg, #151926 0%, #0f121b 100%);
+  --card-bg: linear-gradient(180deg, #151926d4 0%, #0f121be0 100%);
   --card-border:#2f3550; --card-shadow: 0 1px 0 #ffffff0a inset, 0 12px 30px -12px #000d;
   --head-bg: linear-gradient(180deg, #121520f2, #0b0d15f2);
   --btn-bg: linear-gradient(180deg, #f06a70 0%, #d63a42 55%, #a01f28 100%);
@@ -93,8 +93,10 @@
   --bg:#0b0f1e; --panel:#131a30; --panel2:#1b2440; --line:#2a3660;
   --fg:#eef1ff; --dim:#9aa5c8; --accent:#f2a93b; --ok:#5fd38b; --warn:#f2a93b; --err:#ef5b5b; --blue:#7aa8ff;
   --accent-ink:#1a1003;
-  --page-bg: radial-gradient(900px 500px at 15% -10%, #2c3f8a66 0%, transparent 70%), radial-gradient(800px 500px at 100% 110%, #6a2a7a44 0%, transparent 70%), #0b0f1e;
-  --card-bg: linear-gradient(180deg, #151d36 0%, #10172b 100%);
+  --page-bg: url("/bg-archipelago-stars.svg") 0 0 / 420px repeat, radial-gradient(900px 500px at 15% -10%, #2c3f8a77 0%, transparent 70%), radial-gradient(700px 420px at 85% 25%, #3a2a7a33 0%, transparent 70%), radial-gradient(800px 500px at 100% 110%, #6a2a7a55 0%, transparent 70%), #0b0f1e;
+  --ap1:#ef5b5b; --ap2:#f2a93b; --ap3:#ffd35a; --ap4:#5fd38b; --ap5:#7aa8ff; --ap6:#c879ff;
+  --ap-rainbow: linear-gradient(90deg, var(--ap1), var(--ap2), var(--ap3), var(--ap4), var(--ap5), var(--ap6));
+  --card-bg: linear-gradient(180deg, #151d36d4 0%, #10172be0 100%);
   --card-border:#2c3a66; --card-shadow: 0 1px 0 #ffffff0a inset, 0 12px 30px -12px #000d;
   --head-bg: linear-gradient(180deg, #121a31f2, #0c1224f2);
   --btn-bg: linear-gradient(180deg, #ffd27a 0%, #f2a93b 55%, #d9822a 100%);
@@ -108,7 +110,7 @@
   --fg:#e4f3f7; --dim:#8fb2bd; --accent:#3fd0c9; --ok:#6fdc9c; --warn:#f0bd5e; --err:#ef6a6a; --blue:#7ab8ff;
   --accent-ink:#04201f;
   --page-bg: radial-gradient(1000px 560px at 70% -15%, #0f4a5c77 0%, transparent 70%), linear-gradient(180deg, #06141c 0%, #04222c 100%);
-  --card-bg: linear-gradient(180deg, #0f2531 0%, #0a1b24 100%);
+  --card-bg: linear-gradient(180deg, #0f2531d4 0%, #0a1b24e0 100%);
   --card-border:#21495a; --card-shadow: 0 1px 0 #ffffff0a inset, 0 12px 30px -12px #000d;
   --head-bg: linear-gradient(180deg, #0b1e28f2, #071620f2);
   --btn-bg: linear-gradient(180deg, #8ff0e8 0%, #3fd0c9 55%, #23a39e 100%);
@@ -331,7 +333,7 @@ html[data-design="liesofp"] .list h3, html[data-design="silksong"] .list h3 { fo
 [data-design="ds3"] { --head-adjust:0.5; }
 
 /* ---------- more game-free art ---------- */
-html[data-design="archipelago"] body::before { background-image:url("/bg-archipelago.svg"); right:-2vw; background-position:right bottom; opacity:.34; }
+html[data-design="archipelago"] body::before { background-image:url("/bg-archipelago.svg"); right:-2vw; background-position:right bottom; opacity:.42; }
 html[data-design="ozean"] body::before { background-image:url("/bg-ozean.svg"); left:0; width:100vw; background-size:cover; background-position:center bottom; opacity:.3;
   -webkit-mask-image:linear-gradient(transparent 30%, #000 100%); mask-image:linear-gradient(transparent 30%, #000 100%); }
 html[data-design="graphit"] body::before, html[data-design="mono"] body::before { display:none; }
@@ -425,3 +427,169 @@ footer.site .ic { font-size:16px; vertical-align:-3px; }
 .notice p { margin:0; color:var(--fg); line-height:1.45; }
 html[data-design] .notice button { padding:7px 12px; font-size:13px; flex:0 0 auto; }
 @media (max-width:520px) { .notice { flex-wrap:wrap; } .notice button { margin-left:auto; } }
+
+/* ---------- game designs: own accents per design (set through variables) ---------- */
+html[data-design] .pstat, html[data-design] .board, html[data-design] .publog, html[data-design] .card, html[data-design] .run, html[data-design] .stat, html[data-design] .popinfo, html[data-design] aside.side, html[data-design] .isec, html[data-design] .pcard, html[data-design] details.region {
+  background:var(--edge, linear-gradient(#0000, #0000)) top / 100% 2px no-repeat, var(--glow-bg, linear-gradient(#0000, #0000)), var(--card-bg); }
+html[data-design] .board { border:1px solid var(--card-border); box-shadow:var(--card-shadow); border-radius:calc(var(--radius) + 4px); }
+/* menus and dialogs stay solid */
+html[data-design] .dsgmenu, html[data-design] dialog { background:var(--card-bg), var(--panel); }
+/* leaderboard medals */
+html[data-design] .brow .rk { display:grid; place-items:center; width:30px; height:30px; margin:auto; border-radius:50%; font-size:15px;
+  background:#ffffff08; border:1px solid var(--card-border); }
+html[data-design] .brow.r1 .rk { background:radial-gradient(circle at 35% 30%, #fff3c0, #e6b84a 55%, #9a6a10); color:#2a1a00; border-color:#ffd35a; box-shadow:0 0 14px -2px #ffd35a88; }
+html[data-design] .brow.r2 .rk { background:radial-gradient(circle at 35% 30%, #ffffff, #c3c9d4 55%, #6a7488); color:#161a24; border-color:#dfe5f0; }
+html[data-design] .brow.r3 .rk { background:radial-gradient(circle at 35% 30%, #ffd9b8, #c98a55 55%, #6e3c16); color:#200e02; border-color:#e0a070; }
+html[data-design] .brow.r1 .rk .ic { font-size:18px; vertical-align:0; }
+/* section headings on the start page: small mark + fading line */
+html[data-design] .list h3 { display:flex; align-items:center; gap:10px; }
+html[data-design] .list h3::before { content:""; width:7px; height:7px; transform:rotate(45deg); background:var(--accent); box-shadow:0 0 8px var(--glow); flex:0 0 auto; }
+html[data-design] .list h3::after { content:""; flex:1; height:1px; background:linear-gradient(90deg, color-mix(in srgb, var(--accent) 55%, transparent), transparent); }
+/* region stripe in the PopTracker */
+html[data-design] details.region { border-left:3px solid var(--stripe, var(--card-border)); }
+
+[data-design="erdtree"] { --edge:linear-gradient(90deg, transparent, #d4a84a 25%, #fff1c2 50%, #d4a84a 75%, transparent);
+  --glow-bg:radial-gradient(90% 70% at 50% 0%, #d4a84a17, transparent 70%); --stripe:#d4a84a88; }
+html[data-design="erdtree"] .bar i { background:linear-gradient(90deg, #8a6420, #d4a84a 60%, #f6dc8e); box-shadow:0 0 10px -2px #d4a84a; }
+html[data-design="erdtree"] .pcard.me, html[data-design="erdtree"] a.card.running { box-shadow:var(--card-shadow), 0 0 30px -10px #d4a84a66; }
+html[data-design="erdtree"] .brand .bt span, html[data-design="erdtree"] h2 span { background:linear-gradient(180deg, #fff1c2, #d4a84a 60%, #a87b26); -webkit-background-clip:text; background-clip:text; color:transparent; }
+
+[data-design="liesofp"] { --edge:linear-gradient(90deg, #9a6332, #ecc08a 50%, #9a6332);
+  --glow-bg:radial-gradient(100% 80% at 0% 0%, #1f3b3640, transparent 65%); --stripe:#8fb8b0; }
+/* art-deco double frame */
+html[data-design="liesofp"] .pstat, html[data-design="liesofp"] .board, html[data-design="liesofp"] .publog, html[data-design="liesofp"] .card, html[data-design="liesofp"] .run, html[data-design="liesofp"] .stat, html[data-design="liesofp"] .popinfo, html[data-design="liesofp"] aside.side, html[data-design="liesofp"] .isec, html[data-design="liesofp"] .pcard, html[data-design="liesofp"] details.region { box-shadow:var(--card-shadow), inset 0 0 0 3px #0b121180, inset 0 0 0 4px #c98b4e2e; }
+html[data-design="liesofp"] .list h3::before { background:none; border:1.5px solid var(--accent); }
+html[data-design="liesofp"] .bar i { background:linear-gradient(90deg, #6e4520, #c98b4e 55%, #ecc08a); box-shadow:0 0 8px -2px #c98b4e; }
+
+[data-design="bg3"] { --edge:linear-gradient(90deg, transparent, #9a6cd0 20%, #d8b46a 50%, #9a6cd0 80%, transparent);
+  --glow-bg:radial-gradient(80% 70% at 50% 0%, #9a6cd01c, transparent 70%); --stripe:#9a6cd0; }
+html[data-design="bg3"] .pstat, html[data-design="bg3"] .board, html[data-design="bg3"] .publog, html[data-design="bg3"] .card, html[data-design="bg3"] .run, html[data-design="bg3"] .stat, html[data-design="bg3"] .popinfo, html[data-design="bg3"] aside.side, html[data-design="bg3"] .isec, html[data-design="bg3"] .pcard, html[data-design="bg3"] details.region { box-shadow:var(--card-shadow), inset 0 0 34px -18px #9a6cd099; }
+html[data-design="bg3"] .list h3::before { background:linear-gradient(135deg, #d8b46a, #9a6cd0); border-radius:2px; }
+html[data-design="bg3"] .bar i { background:linear-gradient(90deg, #6a3fa0, #9a6cd0 40%, #d8b46a); box-shadow:0 0 10px -2px #9a6cd0; }
+
+[data-design="ds3"] { --edge:linear-gradient(90deg, transparent, #e8823a99 50%, transparent);
+  --glow-bg:radial-gradient(90% 60% at 50% 115%, #e8823a24, transparent 70%); --stripe:#b0521c; }
+html[data-design="ds3"] .bar i { background:linear-gradient(90deg, #6e3210, #e8823a 60%, #ffcf8a); box-shadow:0 0 12px -1px #e8823a; }
+html[data-design="ds3"] .pcard.me, html[data-design="ds3"] a.card.running { box-shadow:var(--card-shadow), 0 10px 30px -14px #e8823a88; }
+html[data-design="ds3"] .list h3::before { border-radius:50% 50% 50% 0; background:radial-gradient(circle at 50% 70%, #ffd08a, #e8823a 60%, #8a2c08); box-shadow:0 0 10px #e8823a; }
+
+[data-design="silksong"] { --edge:linear-gradient(90deg, #e0444b, #e0444b00 70%);
+  --glow-bg:radial-gradient(90% 60% at 100% 0%, #e0444b12, transparent 60%); --stripe:#e0444b; }
+/* stitched inner seam */
+html[data-design="silksong"] .pstat, html[data-design="silksong"] .board, html[data-design="silksong"] .publog, html[data-design="silksong"] .card, html[data-design="silksong"] .run, html[data-design="silksong"] .stat, html[data-design="silksong"] .popinfo, html[data-design="silksong"] aside.side, html[data-design="silksong"] .isec, html[data-design="silksong"] .pcard, html[data-design="silksong"] details.region { outline:1px dashed #f1ebdf1f; outline-offset:-6px; }
+html[data-design="silksong"] .list h3::before { width:22px; height:2px; transform:none; border-radius:2px; background:linear-gradient(90deg, #f1ebdf, #e0444b); }
+html[data-design="silksong"] .bar i { background:linear-gradient(90deg, #8a1e24, #e0444b 60%, #ff8a8f); box-shadow:0 0 10px -2px #e0444b; }
+
+[data-design="ozean"] { --edge:linear-gradient(90deg, #3fd0c9, #7ab8ff 50%, #3fd0c9);
+  --glow-bg:radial-gradient(90% 60% at 50% 120%, #3fd0c91c, transparent 70%); --stripe:#3fd0c9; }
+html[data-design="ozean"] .bar i { background:linear-gradient(90deg, #1f8f9a, #3fd0c9 60%, #a6f0ff); box-shadow:0 0 10px -2px #3fd0c9; }
+html[data-design="ozean"] .list h3::before { border-radius:50%; }
+
+/* ---------- archipelago extras: the six multiworld colours as accents ---------- */
+html[data-design="archipelago"] header { border-image:var(--ap-rainbow) 1; border-bottom-width:2px; }
+html[data-design="archipelago"] .brand .logo::before { background:conic-gradient(from 200deg, var(--ap1), var(--ap2), var(--ap3), var(--ap4), var(--ap5), var(--ap6), var(--ap1)); }
+html[data-design="archipelago"] .brand .logo { filter:drop-shadow(0 0 7px #7aa8ff66); }
+html[data-design="archipelago"] .brand .bt span { background:linear-gradient(90deg, var(--ap2), var(--ap3)); -webkit-background-clip:text; background-clip:text; color:transparent; }
+/* cards: thin rainbow edge on top + soft inner light */
+html[data-design="archipelago"] .pstat, html[data-design="archipelago"] .board, html[data-design="archipelago"] .publog, html[data-design="archipelago"] .card, html[data-design="archipelago"] .run, html[data-design="archipelago"] .stat, html[data-design="archipelago"] .popinfo, html[data-design="archipelago"] aside.side, html[data-design="archipelago"] .isec {
+  background:var(--ap-rainbow) top / 100% 2px no-repeat, radial-gradient(120% 90% at 0% 0%, #7aa8ff10, transparent 60%), var(--card-bg); }
+html[data-design="archipelago"] .pstat.lastdeath { background:linear-gradient(90deg, var(--ap1), #ef5b5b00) top / 100% 2px no-repeat, radial-gradient(120% 140% at 0% 0%, #3a1416 0%, transparent 60%), var(--card-bg); }
+html[data-design="archipelago"] .pstat .k { display:flex; align-items:center; gap:7px; }
+html[data-design="archipelago"] .pstat .k::before { content:""; width:8px; height:8px; border-radius:50%; background:var(--c, var(--ap5)); box-shadow:0 0 8px var(--c, var(--ap5)); flex:0 0 auto; }
+html[data-design="archipelago"] .pubtop > .pstat:nth-child(6n+1), html[data-design="archipelago"] #mytrk .pstat:nth-child(6n+1) { --c:var(--ap1); }
+html[data-design="archipelago"] .pubtop > .pstat:nth-child(6n+2), html[data-design="archipelago"] #mytrk .pstat:nth-child(6n+2) { --c:var(--ap4); }
+html[data-design="archipelago"] .pubtop > .pstat:nth-child(6n+3), html[data-design="archipelago"] #mytrk .pstat:nth-child(6n+3) { --c:var(--ap2); }
+html[data-design="archipelago"] .pubtop > .pstat:nth-child(6n+4), html[data-design="archipelago"] #mytrk .pstat:nth-child(6n+4) { --c:var(--ap5); }
+html[data-design="archipelago"] .pubtop > .pstat:nth-child(6n+5), html[data-design="archipelago"] #mytrk .pstat:nth-child(6n+5) { --c:var(--ap6); }
+/* every player gets their own island colour */
+html[data-design="archipelago"] .pplayers > .pcard { --c:var(--ap5); border-left:3px solid var(--c);
+  background:radial-gradient(140% 100% at 0% 0%, color-mix(in srgb, var(--c) 12%, transparent), transparent 55%), var(--card-bg); }
+html[data-design="archipelago"] .pplayers > .pcard:nth-child(6n+1) { --c:var(--ap2); } html[data-design="archipelago"] .pplayers > .pcard:nth-child(6n+2) { --c:var(--ap5); }
+html[data-design="archipelago"] .pplayers > .pcard:nth-child(6n+3) { --c:var(--ap4); } html[data-design="archipelago"] .pplayers > .pcard:nth-child(6n+4) { --c:var(--ap6); }
+html[data-design="archipelago"] .pplayers > .pcard:nth-child(6n+5) { --c:var(--ap1); } html[data-design="archipelago"] .pplayers > .pcard:nth-child(6n+6) { --c:var(--ap3); }
+html[data-design="archipelago"] .pplayers > .pcard:hover { border-color:var(--c); border-left-color:var(--c); box-shadow:var(--card-shadow), 0 0 26px -8px var(--c); }
+html[data-design="archipelago"] .pplayers > .pcard .bar i { background:linear-gradient(90deg, color-mix(in srgb, var(--c) 55%, #000), var(--c)); box-shadow:0 0 10px -2px var(--c); }
+/* progress: done = green to teal, reachable = orange to yellow */
+html[data-design="archipelago"] .bar i { background:linear-gradient(90deg, #2fa66a, var(--ap4) 60%, #6fe0d0); }
+html[data-design="archipelago"] .bar.two u { background:linear-gradient(90deg, var(--ap2), var(--ap3)); opacity:.9; }
+/* leaderboard medals */
+html[data-design="archipelago"] .brow .rk { display:grid; place-items:center; width:30px; height:30px; margin:auto; border-radius:50%; font-size:15px;
+  background:#ffffff08; border:1px solid var(--card-border); }
+html[data-design="archipelago"] .brow.r1 .rk { background:radial-gradient(circle at 35% 30%, #fff3c0, #e6b84a 55%, #9a6a10); color:#2a1a00; border-color:#ffd35a; box-shadow:0 0 14px -2px #ffd35a88; }
+html[data-design="archipelago"] .brow.r2 .rk { background:radial-gradient(circle at 35% 30%, #ffffff, #c3c9d4 55%, #6a7488); color:#161a24; border-color:#dfe5f0; }
+html[data-design="archipelago"] .brow.r3 .rk { background:radial-gradient(circle at 35% 30%, #ffd9b8, #c98a55 55%, #6e3c16); color:#200e02; border-color:#e0a070; }
+html[data-design="archipelago"] .brow:hover { background:linear-gradient(90deg, #7aa8ff14, transparent); }
+/* PopTracker regions: colour stripe cycling through the six colours */
+html[data-design="archipelago"] details.region { border-left:3px solid var(--c, var(--ap5)); }
+html[data-design="archipelago"] details.region:nth-of-type(6n+1) { --c:var(--ap1); } html[data-design="archipelago"] details.region:nth-of-type(6n+2) { --c:var(--ap2); }
+html[data-design="archipelago"] details.region:nth-of-type(6n+3) { --c:var(--ap3); } html[data-design="archipelago"] details.region:nth-of-type(6n+4) { --c:var(--ap4); }
+html[data-design="archipelago"] details.region:nth-of-type(6n+5) { --c:var(--ap5); } html[data-design="archipelago"] details.region:nth-of-type(6n+6) { --c:var(--ap6); }
+html[data-design="archipelago"] details.region > summary .idx { color:var(--c); font-weight:700; }
+/* run list on the start page */
+html[data-design="archipelago"] .list h3 { display:flex; align-items:center; gap:10px; color:var(--fg); }
+html[data-design="archipelago"] .list h3::after { content:""; flex:1; height:2px; border-radius:2px; background:var(--ap-rainbow); opacity:.35; }
+html[data-design="archipelago"] a.card:hover, html[data-design="archipelago"] a.run:hover { transform:translateY(-2px); }
+html[data-design="archipelago"] a.card, html[data-design="archipelago"] a.run { transition:transform .15s, box-shadow .2s, border-color .2s; }
+html[data-design="archipelago"] h2 span { background:linear-gradient(90deg, var(--ap2), var(--ap3) 50%, var(--ap2)); -webkit-background-clip:text; background-clip:text; color:transparent; }
+/* log: soft row hover, coloured left edge on fresh rows */
+html[data-design="archipelago"] #publog .ev:hover, html[data-design="archipelago"] .ev:hover { background:#7aa8ff0d; }
+html[data-design="archipelago"] .tabs { background:#05081299; }
+@media (prefers-reduced-motion: reduce) { html[data-design="archipelago"] a.card:hover, html[data-design="archipelago"] a.run:hover { transform:none; } }
+
+/* ---------- phone + tablet ---------- */
+.pstat .v:has(small.of) { display:flex; flex-wrap:wrap; align-items:baseline; column-gap:.35em; }
+.pstat .v small.of { font-size:.45em; font-weight:600; color:var(--dim); white-space:nowrap; }
+.roomchip button span:not(.ic) { margin-left:4px; }
+html, body { overflow-x:clip; }
+@media (max-width:1100px) {
+  /* header items in one flex row: brand + run name left, settings right, room/player below */
+  html[data-design] header h1 { display:contents; }
+  html[data-design] header { gap:8px 10px; }
+  header .brand, header .crumb, header #htitle, header #hpill { order:1; }
+  header .hright { order:2; margin-left:auto !important; }
+  header .roomchip { order:3; }
+  header #whopick { order:4; }
+  header #tiles { order:5; }
+  header #status { order:6; }
+  header #htitle { flex:0 1 auto; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:16px; font-weight:700; }
+}
+@media (max-width:1100px) { #mytrk .pstat .v { font-size:28px; white-space:nowrap; } }
+@media (max-width:700px) {
+  html[data-design] header { padding:8px 12px; min-height:52px; }
+  header #htitle { flex:1 1 0; }
+  html[data-design] header { position:relative; }
+  header .roomchip { flex:1 1 150px; min-width:0; overflow:hidden; }
+  header .roomchip button, header .roomchip code { min-width:0; overflow:hidden; text-overflow:ellipsis; }
+  header .roomchip button span:not(.ic) { overflow:hidden; text-overflow:ellipsis; }
+  header #whopick { flex:0 1 150px; min-width:120px; max-width:46%; }
+  .cog { width:34px; height:34px; }
+  .langsw button { padding:4px 7px !important; }
+  main, #pub { padding-left:12px !important; padding-right:12px !important; }
+  .pubtop { grid-template-columns:repeat(2, minmax(0,1fr)); gap:10px; }
+  .pstat { padding:12px 14px; }
+  .pstat .v { font-size:30px; }
+  #mytrk .pstat .v { font-size:26px; white-space:nowrap; }
+  .pstat .k { font-size:12px; }
+  /* leaderboard: time goes under the name */
+  .brow { grid-template-columns:30px minmax(0,1fr); padding:10px 12px; gap:2px 10px; }
+  .brow .tm { grid-column:2; text-align:left; }
+  .brow .tm small { display:inline; margin-left:6px; }
+  .board .bh { flex-wrap:wrap; }
+  .board .bh .since { margin-left:0; flex-basis:100%; }
+  /* log filter: two selects side by side, search below */
+  .publog .logfilter select { flex:1 1 40%; min-width:0; }
+  .publog .logfilter input { flex:1 1 100%; }
+  /* PopTracker regions: name may wrap, count + bar stay on the right */
+  details.region > summary { gap:8px; padding:10px 12px; }
+  summary .rn { flex:1 1 auto; min-width:0; }
+  summary .count { white-space:nowrap; font-size:12px; }
+  summary .bar { width:48px; }
+  .loc { padding-left:30px; padding-right:12px; }
+  /* bigger touch targets */
+  button, select, input[type=search], input[type=text] { min-height:36px; }
+}
+@media (max-width:380px) {
+  .pubtop { grid-template-columns:minmax(0,1fr); }
+  .langsw button svg { width:16px; }
+}
+html[data-design="hell"] .brow .who { background:none; border:none; box-shadow:none; }
