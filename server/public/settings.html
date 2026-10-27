@@ -383,7 +383,7 @@ const ICON_CHOICES = [
   { id: "kompass", name: "Kompass", sub: "Inseln, Route und abgehaktes Ziel im Kompassring" },
   { id: "pin", name: "Pin", sub: "Kartennadel mit Palmeninsel" },
 ];
-let siteIcon = ICON_CHOICES.some(i => i.id === document.documentElement.dataset.icon) ? document.documentElement.dataset.icon : "kompass";
+let siteIcon = ICON_CHOICES.some(i => i.id === document.documentElement.dataset.icon) ? document.documentElement.dataset.icon : "pin";
 function renderIcons() {
   const host = $("icons");
   host.innerHTML = "";

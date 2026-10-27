@@ -99,8 +99,8 @@ const DEFAULT_DESIGN = DESIGNS.includes(process.env.DEFAULT_DESIGN) ? process.en
 const siteDesign = () => { const r = db.prepare("SELECT value FROM site WHERE key='design'").get(); return r && DESIGNS.includes(r.value) ? r.value : DEFAULT_DESIGN; };
 const escHtml = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 // Site logo (favicon + header mark), also chosen in /settings.
-const ICONS = ["kompass", "pin"];
-const siteIcon = () => { const r = db.prepare("SELECT value FROM site WHERE key='icon'").get(); return r && ICONS.includes(r.value) ? r.value : "kompass"; };
+const ICONS = ["pin", "kompass"];
+const siteIcon = () => { const r = db.prepare("SELECT value FROM site WHERE key='icon'").get(); return r && ICONS.includes(r.value) ? r.value : "pin"; };
 // Fixed URLs browsers and the header ask for -> files of the chosen logo.
 const ICON_FILES = { "/favicon.svg": ".svg", "/favicon.ico": ".ico", "/favicon-32.png": "-32.png",
                      "/apple-touch-icon.png": "-180.png", "/logo-512.png": "-512.png", "/logo-mark.svg": "-mark.svg" };

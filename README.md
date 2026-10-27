@@ -10,6 +10,7 @@ It stays connected to your rooms in the background, so nothing is missed while n
   it rebuilds the real Archipelago world from the room's `slot_data`, so the game's own rules decide.
 - **No spoilers** — the public pages never show where items are placed.
 - **Designs** — eleven themes, picked per visitor in the header; the default is set in `/settings`.
+- **Logo** — two built-in logos (Pin, Kompass) for favicon and header, chosen in `/settings`; the header mark takes the colour of the design.
 - **Private test runs** — hidden from everyone but you.
 - **No tracking, no third parties** — fonts and icons are self-hosted, no cookies except your own admin login.
 
