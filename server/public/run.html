@@ -837,13 +837,15 @@ let ME = null;                   // picked slot; null = overview
 let mt = null, mtSig = "", mtBusy = false, mtTab = "pop", whoApplied = false;
 const mtOpen = new Set();        // open regions, kept across polls
 
-/** Address of a player's PopTracker, e.g. /run-2/liesofp/poptracker. */
-const playerUrl = slot => { const p = playerBy(slot); return slot == null || !p ? `/run-${RUN}` : `/run-${RUN}/${p.slug || p.slot}/poptracker`; };
+/** Address of a player's PopTracker, e.g. /run-2/waso/poptracker. */
+const playerUrl = slot => { const p = playerBy(slot); return slot == null || !p ? `/run-${RUN}` : `/run-${RUN}/${encodeURIComponent(p.slug || p.slot)}/poptracker`; };
 // Back/forward between players and the overview.
 window.addEventListener("popstate", () => {
   if (!PUBLIC) return;
-  const m = /^\/run-\d+\/([a-z0-9-]+)\/poptracker\/?$/.exec(location.pathname);
-  const p = m && players.find(x => x.slug === m[1] || String(x.slot) === m[1]);
+  const m = /^\/run-\d+\/([^/]+)\/poptracker\/?$/.exec(location.pathname);
+  let seg = m ? m[1] : "";
+  try { seg = decodeURIComponent(seg); } catch (e) {}
+  const p = m && players.find(x => x.slug === seg || String(x.slot) === seg);
   pickWho(p ? p.slot : null, false);
 });
 

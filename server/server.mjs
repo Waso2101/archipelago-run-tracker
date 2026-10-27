@@ -998,22 +998,30 @@ function notFound(res) {
 <script>langToggle()</script></body></html>`);
 }
 
-// URL names for players: the game ("Lies Of P" -> "liesofp"). Two players with the
-// same game get their name added ("eldenring-alice").
+// URL names for players: their slot name ("Waso" -> /run-2/waso/poptracker). Archipelago keeps
+// names unique per room; if two still look alike after simplifying, the game is added.
 const slugify = s => String(s || "").normalize("NFKD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, "");
+const nameSlug = s => String(s || "").normalize("NFKD").replace(/[\u0300-\u036f]/g, "").toLowerCase()
+  .replace(/[^\p{L}\p{N}]+/gu, "-").replace(/^-+|-+$/g, "");
 function slugsOf(dkey) {
   const ps = q("SELECT slot, name, game FROM players WHERE room=? ORDER BY slot").all(dkey);
-  const count = new Map();
-  for (const x of ps) { const g = slugify(x.game); count.set(g, (count.get(g) || 0) + 1); }
+  const games = new Map();
+  for (const x of ps) { const g = slugify(x.game); games.set(g, (games.get(g) || 0) + 1); }
+  const used = new Set();
   return ps.map(x => {
     const g = slugify(x.game) || "slot";
-    const slug = count.get(g) > 1 ? `${g}-${slugify(x.name) || x.slot}` : g;
-    return { slot: x.slot, game: x.game, slug, nameSlug: slugify(x.name) };
+    let slug = nameSlug(x.name) || g;
+    if (used.has(slug)) slug = `${slug}-${g}`;
+    if (used.has(slug)) slug = `${slug}-${x.slot}`;
+    used.add(slug);
+    // Earlier addresses used the game ("liesofp", "eldenring-waso"); they still work and redirect.
+    const old = games.get(g) > 1 ? `${g}-${slugify(x.name) || x.slot}` : g;
+    return { slot: x.slot, game: x.game, slug, old, flat: slugify(x.name) };
   });
 }
-/** Game slug, else player name, else slot number. */
-const findSlug = (list, seg) => list.find(x => x.slug === seg) || list.find(x => x.nameSlug === seg)
-  || list.find(x => String(x.slot) === seg) || null;
+/** Player name, else an old game address, else the slot number. */
+const findSlug = (list, seg) => list.find(x => x.slug === seg) || list.find(x => x.old === seg)
+  || list.find(x => x.flat === seg) || list.find(x => String(x.slot) === seg) || null;
 
 /** run.html with what to show (overview, a player, my tracker) written into the page. */
 function sendRunPage(res, page) {
@@ -1240,17 +1248,20 @@ const server = http.createServer(async (req, res) => {
     }
 
     //   /run-N                     overview (public)
-    //   /run-N/<game>/poptracker   one player's PopTracker (public), e.g. /run-2/liesofp/poptracker
-    const page = /^\/run-(\d+)(?:\/([a-z0-9-]+)(?:\/(poptracker))?)?\/?$/.exec(p);
+    //   /run-N/<player>/poptracker one player's PopTracker (public), e.g. /run-2/waso/poptracker
+    const page = /^\/run-(\d+)(?:\/([^/]+)(?:\/(poptracker))?)?\/?$/.exec(p);
     if (page) {
       const run = seeRun(page[1], isAdmin(req));
       if (!run) return notFound(res);
-      const [, , seg, view] = page;
+      const [, , rawSeg, view] = page;
+      let seg; try { seg = decodeURIComponent(rawSeg || "").toLowerCase(); } catch { return notFound(res); }
       const slugs = slugsOf(run.dkey);
       if (!seg) return sendRunPage(res, { run: run.id, mode: "overview" });
       const pl = findSlug(slugs, seg);
       if (!pl) return notFound(res);
-      if (!view) return redirect(res, `/run-${run.id}/${pl.slug}/poptracker`);
+      // Old or differently written address: go to the player's own one.
+      if (view && seg !== pl.slug) return redirect(res, `/run-${run.id}/${encodeURIComponent(pl.slug)}/${view}`);
+      if (!view) return redirect(res, `/run-${run.id}/${encodeURIComponent(pl.slug)}/poptracker`);
       return sendRunPage(res, { run: run.id, mode: "player", slot: pl.slot });
     }
 
