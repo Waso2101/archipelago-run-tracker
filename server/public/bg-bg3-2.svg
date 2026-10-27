@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 900">
+<defs><radialGradient id="m" r=".5"><stop offset="0" stop-color="#b48ce0" stop-opacity=".35"/><stop offset="1" stop-color="#b48ce0" stop-opacity="0"/></radialGradient></defs>
+<circle cx="200" cy="660" r="190" fill="url(#m)"/>
+<g fill="none" stroke="#9a6cd0" stroke-opacity=".55">
+<circle cx="200" cy="660" r="170" stroke-width="2"/><circle cx="200" cy="660" r="150" stroke-width="1" stroke-dasharray="3 7"/>
+<path d="M200 490 L347 745 L53 745z" stroke-width="1.5"/><path d="M200 830 L53 575 L347 575z" stroke-width="1.5"/></g>
+<g fill="#d8b46a" opacity=".6"><path d="M196 494h8v8h-8z" transform="rotate(45 200 498)"/><path d="M343 656h8v8h-8z" transform="rotate(45 347 660)"/><path d="M196 818h8v8h-8z" transform="rotate(45 200 822)"/><path d="M49 656h8v8h-8z" transform="rotate(45 53 660)"/></g>
+<g fill="none" stroke="#d8b46a" stroke-width="3" stroke-linejoin="round" stroke-opacity=".9">
+<path d="M200 560 L278 605 L278 705 L200 750 L122 705 L122 605z"/>
+<path d="M200 600 L245 680 L155 680z"/>
+<path d="M200 560 L200 600 M278 605 L245 680 M278 705 L245 680 M200 750 L245 680 M200 750 L155 680 M122 705 L155 680 M122 605 L155 680 M122 605 L200 600 M278 605 L200 600"/></g>
+<text x="200" y="667" fill="#f2d89a" font-family="Georgia, serif" font-size="24" font-weight="700" text-anchor="middle">20</text>
+</svg>

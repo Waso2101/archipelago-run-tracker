@@ -428,6 +428,11 @@ footer.site .ic { font-size:16px; vertical-align:-3px; }
 html[data-design] .notice button { padding:7px 12px; font-size:13px; flex:0 0 auto; }
 @media (max-width:520px) { .notice { flex-wrap:wrap; } .notice button { margin-left:auto; } }
 
+/* footer always at the bottom, also on short pages */
+html[data-design] body { min-height:100vh; display:flex; flex-direction:column; }
+html[data-design] body > main { flex:1 0 auto; width:100%; }
+html[data-design] body > footer.site { margin-top:auto; }
+
 /* ---------- game designs: own accents per design (set through variables) ---------- */
 html[data-design] .pstat, html[data-design] .board, html[data-design] .publog, html[data-design] .card, html[data-design] .run, html[data-design] .stat, html[data-design] .popinfo, html[data-design] aside.side, html[data-design] .isec, html[data-design] .pcard, html[data-design] details.region {
   background:var(--edge, linear-gradient(#0000, #0000)) top / 100% 2px no-repeat, var(--glow-bg, linear-gradient(#0000, #0000)), var(--card-bg); }
@@ -593,3 +598,29 @@ html, body { overflow-x:clip; }
   .langsw button svg { width:16px; }
 }
 html[data-design="hell"] .brow .who { background:none; border:none; box-shadow:none; }
+
+/* ---------- second, smaller motif on the other side of the page ---------- */
+html[data-design] body::after { content:""; display:none; position:fixed; z-index:-1; pointer-events:none; top:0; bottom:0;
+  width:min(24vw, 360px); background-repeat:no-repeat; background-size:contain; opacity:.2;
+  -webkit-mask-image:linear-gradient(transparent, #000 12%, #000 88%, transparent); mask-image:linear-gradient(transparent, #000 12%, #000 88%, transparent); }
+html[data-design="erdtree"] body::after { display:block; left:1vw; background-image:url("/bg-erdtree-2.svg"); background-position:left bottom; opacity:.24; }
+html[data-design="liesofp"] body::after { display:block; right:1vw; background-image:url("/bg-liesofp-2.svg"); background-position:right top; opacity:.24; }
+html[data-design="bg3"] body::after { display:block; left:0; background-image:url("/bg-bg3-2.svg"); background-position:left bottom; opacity:.28; }
+html[data-design="ds3"] body::after { display:block; right:0; background-image:url("/bg-ds3-2.svg"); background-position:right bottom; opacity:.34; }
+html[data-design="silksong"] body::after { display:block; left:0; background-image:url("/bg-silksong-2.svg"); background-position:left top; opacity:.32; -webkit-mask-image:none; mask-image:none; }
+/* archipelago: lighthouse on the left, small balloon top right */
+html[data-design="archipelago"] body::after { display:block; left:0; right:0; width:auto; opacity:.42; -webkit-mask-image:none; mask-image:none;
+  background-image:url("/bg-archipelago-lighthouse.svg"), url("/bg-archipelago-balloon.svg");
+  background-size:auto min(64vh, 560px), 58px auto; background-position:left 1vw bottom 70px, right 150px top 96px; }
+@media (max-width:1100px) { html[data-design] body::after { display:none !important; } }
+
+/* ---------- particle layers behind the game designs (like the archipelago stars) ---------- */
+[data-design="erdtree"] { --page-bg: url("/bg-erdtree-motes.svg") 0 0 / 380px repeat, radial-gradient(1200px 600px at 50% -10%, #2a2214 0%, transparent 70%), radial-gradient(900px 500px at 100% 100%, #1a140c 0%, transparent 70%), #0e0d0b; }
+[data-design="liesofp"] { --page-bg: url("/bg-liesofp-dust.svg") 0 0 / 400px repeat, radial-gradient(1100px 600px at 30% -12%, #1f3b3666 0%, transparent 70%), radial-gradient(800px 500px at 100% 110%, #3a241455 0%, transparent 70%), #0b1211; }
+[data-design="bg3"] { --page-bg: url("/bg-bg3-stars.svg") 0 0 / 420px repeat, radial-gradient(1000px 560px at 70% -12%, #4a2a6a66 0%, transparent 70%), radial-gradient(800px 500px at 0% 110%, #2a163d88 0%, transparent 70%), #0e0a14; }
+[data-design="ds3"] { --page-bg: url("/bg-ds3-ash.svg") 0 0 / 380px repeat, radial-gradient(900px 500px at 50% 120%, #5a2a0e55 0%, transparent 70%), radial-gradient(1200px 600px at 50% -20%, #2a2824 0%, transparent 70%), #0c0c0b; }
+[data-design="silksong"] { --page-bg: url("/bg-silksong-silk.svg") 0 0 / 400px repeat, radial-gradient(900px 520px at 85% -10%, #5a1a2244 0%, transparent 70%), radial-gradient(1000px 600px at 10% 110%, #1b2240 0%, transparent 70%), #0a0c13; }
+html[data-design="bg3"] body::before { background-position:right bottom; opacity:.34; }
+html[data-design="erdtree"] body::before { opacity:.36; }
+html[data-design="erdtree"] body::after { opacity:.3; }
+html[data-design="ds3"] body::after { opacity:.4; }
