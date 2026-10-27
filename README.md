@@ -1,5 +1,8 @@
 # Archipelago Run Tracker
 
+> **Work in progress.** This started as the tracker for our own runs and is only tested with those so far.
+> Expect rough edges, missing pieces and changes without notice. Issues and ideas are welcome.
+
 A self-hosted live tracker for [Archipelago](https://archipelago.gg) multiworld runs.
 It stays connected to your rooms in the background, so nothing is missed while nobody has the page open.
 
@@ -8,7 +11,6 @@ It stays connected to your rooms in the background, so nothing is missed while n
 - **A PopTracker for every player, for any game** — pick yourself in the top left and see which of your
   open locations are *in logic right now*, your received items and your hints. The logic is not hand-written:
   it rebuilds the real Archipelago world from the room's `slot_data`, so the game's own rules decide.
-- **No spoilers** — the public pages never show where items are placed.
 - **Designs** — eleven themes, picked per visitor in the header; the default is set in `/settings`.
 - **Logo** — two built-in logos (Pin, Kompass) for favicon and header, chosen in `/settings`; the header mark takes the colour of the design.
 - **Private test runs** — hidden from everyone but you.
