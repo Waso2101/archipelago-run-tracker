@@ -1,4 +1,5 @@
 """Download the Google Fonts the site uses and write a local fonts.css (no requests to Google at runtime)."""
+import hashlib
 import os
 import re
 import sys
@@ -7,7 +8,7 @@ import urllib.request
 OUT = sys.argv[1]
 UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36"
 ICONS = sorted("""arrow_back arrow_forward check close delete description download edit emoji_events key lightbulb lock
-monitoring open_in_new radio_button_checked replay save skull stop_circle task_alt undo visibility visibility_off person dns cookie sports_esports gavel info copyright shield""".split())
+monitoring open_in_new radio_button_checked replay save skull stop_circle task_alt undo visibility visibility_off person dns cookie sports_esports gavel info copyright shield mail send mark_email_read mark_email_unread reply inbox content_copy lan""".split())
 URLS = [
     "https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Inter:wght@400;500;600;700"
     "&family=Cormorant+Garamond:wght@500;700&family=Cormorant+SC:wght@500;700&family=IM+Fell+English+SC&display=swap",
@@ -35,7 +36,9 @@ for url in URLS:
         name = "font-" + re.sub(r"[^a-z0-9]+", "-", fam.lower()).strip("-") + f"-{wt}" + (f"-{subset}" if subset else "") + ".woff2"
         data = get(src)
         open(os.path.join(OUT, name), "wb").write(data)
-        out_css.append(block.replace(src, "/" + name) + "\n")
+        # Content hash in the URL: fonts are cached for a year, a changed file needs a new address.
+        ver = hashlib.sha256(data).hexdigest()[:10]
+        out_css.append(block.replace(src, f"/{name}?v={ver}") + "\n")
         n += 1
         print(f"{name}: {len(data) // 1024} KB")
 open(os.path.join(OUT, "fonts.css"), "w", encoding="utf-8", newline="\n").write("".join(out_css))
