@@ -41,13 +41,26 @@ Requirements: Docker with Compose, a domain and a reverse proxy for HTTPS (examp
 git clone https://github.com/<you>/archipelago-run-tracker
 cd archipelago-run-tracker
 cp .env.example .env
-node tools/make-password.mjs "your admin password"   # paste the line into .env
+node tools/make-password.mjs "your admin password"   # paste the line into .env, quotes included
+# no Node on the server? the same with Docker:
+#   docker run --rm -v "$PWD/tools:/t:ro" node:24-alpine node /t/make-password.mjs "your admin password"
 # also set SESSION_SECRET, SITE_NAME and SITE_OWNER in .env
+mkdir -p data && sudo chown 1000:1000 data            # the tracker runs as user "node" (UID 1000)
 docker compose up -d --build
 ```
 
 The first build of `ap-logic` downloads Archipelago and takes a few minutes.
-The tracker listens on `127.0.0.1:8095`. Example Caddy config:
+The tracker listens on `127.0.0.1:8095`. Port taken (e.g. a second instance)? Put this into
+`docker-compose.override.yml` instead of editing the compose file:
+
+```yaml
+services:
+  tracker:
+    ports: !override
+      - "127.0.0.1:8097:8080"
+```
+
+Example Caddy config:
 
 ```
 tracker.example.com {

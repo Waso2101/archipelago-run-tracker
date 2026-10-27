@@ -3,3 +3,4 @@ data/
 ap-logic/apworlds/*.apworld
 node_modules/
 *.log
+docker-compose.override.yml
