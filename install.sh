@@ -94,7 +94,9 @@ fi
 
 say "Downloading images ..."
 export TRACKER_VERSION
-docker compose pull
+# Plain docker pull: compose would need .env, which a fresh install only writes below.
+docker pull -q "$IMAGE:$TRACKER_VERSION"
+docker pull -q "$IMAGE-logic:$TRACKER_VERSION"
 
 if [ "$UPDATE" = 0 ]; then
   secret=$(od -An -tx1 -N32 /dev/urandom | tr -d ' \n')
