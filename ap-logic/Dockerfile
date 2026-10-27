@@ -5,10 +5,12 @@ RUN apt-get update && apt-get install -y --no-install-recommends git \
 ARG AP_VERSION=0.6.8
 RUN git clone --depth 1 --branch ${AP_VERSION} https://github.com/ArchipelagoMW/Archipelago.git /ap
 WORKDIR /ap
-# Core requirements without the GUI toolkit.
+# Core requirements without the GUI toolkit, plus what single core worlds need
+# (pkg_resources for Pokemon Emerald, pyevermizer, zilliandomizer, ...).
 RUN grep -viE '^(kivy|kivymd|pyshortcuts)' requirements.txt > /tmp/req.txt \
- && echo requests >> /tmp/req.txt \
- && pip install --no-cache-dir -r /tmp/req.txt
+ && echo requests >> /tmp/req.txt && echo 'setuptools<81' >> /tmp/req.txt \
+ && pip install --no-cache-dir -r /tmp/req.txt \
+ && for f in worlds/*/requirements.txt; do pip install --no-cache-dir -r "$f" || echo "skip $f"; done
 ENV SKIP_REQUIREMENTS_UPDATE=1 PYTHONUNBUFFERED=1
 COPY apworlds/ /ap/custom_worlds/
 COPY logic_server.py /ap/logic_server.py
