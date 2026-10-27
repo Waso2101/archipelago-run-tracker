@@ -73,7 +73,7 @@ shows items, checks and hints, just not what is reachable.
 |---|---|
 | `/` | all runs |
 | `/run-N` | live overview of run N |
-| `/run-N/<game>/poptracker` | one player's tracker, e.g. `/run-2/darksoulsiii/poptracker` |
+| `/run-N/<player>/poptracker` | one player's tracker, e.g. `/run-2/alice/poptracker` |
 | `/run-N/log` | the full log as a file |
 | `/login`, `/settings` | admin |
 | `/datenschutz` | privacy page (a template — adapt it to how you run the site) |
