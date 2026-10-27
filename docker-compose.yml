@@ -1,5 +1,7 @@
 services:
   tracker:
+    # Prebuilt image of the release in TRACKER_VERSION; `docker compose up -d --build` builds it from ./server instead.
+    image: ghcr.io/waso2101/archipelago-run-tracker:${TRACKER_VERSION:-latest}
     build: ./server
     container_name: archipelago-run-tracker
     restart: unless-stopped
@@ -11,13 +13,14 @@ services:
       # Pages straight from the folder: HTML/CSS/JS changes are live without a rebuild.
       - ./server/public:/app/public:ro
     ports:
-      - "127.0.0.1:8095:8080"   # only local; put a reverse proxy (Caddy, nginx) with HTTPS in front
+      - "127.0.0.1:${TRACKER_PORT:-8095}:8080"   # only local; put a reverse proxy (Caddy, nginx) with HTTPS in front
     depends_on:
       - ap-logic
 
   # PopTracker logic: Archipelago + apworlds work out which locations are reachable.
   # Extra games: put their .apworld into ap-logic/apworlds/, then `docker compose up -d --build`.
   ap-logic:
+    image: ghcr.io/waso2101/archipelago-run-tracker-logic:${TRACKER_VERSION:-latest}
     build: ./ap-logic
     container_name: archipelago-run-tracker-logic
     restart: unless-stopped

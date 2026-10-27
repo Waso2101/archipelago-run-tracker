@@ -35,10 +35,25 @@ browser ──► tracker (Node, SQLite) ──► Archipelago room (WebSocket, 
 
 ## Setup
 
-Requirements: Docker with Compose, a domain and a reverse proxy for HTTPS (example below).
+Requirements: Linux with Docker and Compose v2, a domain and a reverse proxy for HTTPS (example below).
+
+### Quick install
 
 ```sh
-git clone https://github.com/<you>/archipelago-run-tracker
+curl -fsSL https://raw.githubusercontent.com/Waso2101/archipelago-run-tracker/main/install.sh | sh
+```
+
+The script asks for the site name, the owner, a local port and the admin password, then downloads
+the latest [release](https://github.com/Waso2101/archipelago-run-tracker/releases), writes `.env`
+(password hash and session secret included), pulls the prebuilt images and starts everything
+in `./archipelago-run-tracker`. You can [read it](install.sh) before running it.
+
+**Update:** run the same command again from the same folder. `.env`, `data/` and your apworlds stay.
+
+### Manual setup
+
+```sh
+git clone https://github.com/Waso2101/archipelago-run-tracker
 cd archipelago-run-tracker
 cp .env.example .env
 node tools/make-password.mjs "your admin password"   # paste the line into .env, quotes included
@@ -50,15 +65,10 @@ docker compose up -d --build
 ```
 
 The first build of `ap-logic` downloads Archipelago and takes a few minutes.
-The tracker listens on `127.0.0.1:8095`. Port taken (e.g. a second instance)? Put this into
-`docker-compose.override.yml` instead of editing the compose file:
+`docker compose pull && docker compose up -d` uses the prebuilt images instead; `TRACKER_VERSION=v0.1.0`
+in `.env` pins a release (default: `latest`).
 
-```yaml
-services:
-  tracker:
-    ports: !override
-      - "127.0.0.1:8097:8080"
-```
+The tracker listens on `127.0.0.1:8095`. Port taken (e.g. a second instance)? Set `TRACKER_PORT=8097` in `.env`.
 
 Example Caddy config:
 
@@ -77,7 +87,8 @@ and lets the tracker follow the room when archipelago.gg moves it to a new port.
 ## Games and apworlds
 
 Every game that is part of Archipelago 0.6.8 works out of the box. For other games put their `.apworld`
-into `ap-logic/apworlds/` and run `docker compose up -d --build ap-logic`. Without it, that player's page still
+into `ap-logic/apworlds/` and run `docker compose up -d --build ap-logic` (this builds the logic image yourself
+instead of using the prebuilt one). Without it, that player's page still
 shows items, checks and hints, just not what is reachable.
 
 ## Addresses
@@ -103,5 +114,5 @@ Page changes (`server/public/`) are picked up on reload; the compose file mounts
 
 ## License
 
-MIT, see [LICENSE](LICENSE). Archipelago and the games named in the designs belong to their respective owners;
+MIT, see [LICENSE](LICENSE). Bundled fonts: see [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md). Archipelago and the games named in the designs belong to their respective owners;
 the background drawings are original and only inspired by them.
