@@ -3,6 +3,10 @@
 > **Work in progress.** This started as the tracker for our own runs and is only tested with those so far.
 > Expect rough edges, missing pieces and changes without notice. Issues and ideas are welcome.
 
+> **Unofficial.** This is a fan project. It is not affiliated with, endorsed by or associated with
+> the Archipelago project or its team. "Archipelago" refers to the multiworld randomizer at
+> [archipelago.gg](https://archipelago.gg); all game names belong to their respective owners.
+
 A self-hosted live tracker for [Archipelago](https://archipelago.gg) multiworld runs.
 It stays connected to your rooms in the background, so nothing is missed while nobody has the page open.
 
